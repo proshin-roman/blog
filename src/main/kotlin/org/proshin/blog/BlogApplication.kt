@@ -10,5 +10,3 @@ open class BlogApplication {
 fun main(args: Array<String>) {
     SpringApplication.run(BlogApplication::class.java, *args)
 }
-
-

@@ -7,5 +7,7 @@ spring:
     # password: you must specify it via System or Environment variables
     hikari:
       idle-timeout: 10000
+  messages:
+    fallback-to-system-locale: false
 liquibase:
   change-log: classpath:changelog/changelog.xml
