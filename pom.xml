@@ -23,25 +23,22 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
     <kotlin.version>1.1.2-4</kotlin.version>
+    <start-class>org.proshin.blog.BlogApplicationKt</start-class>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>jcenter</id>
+      <name>jCenter</name>
+      <url>https://jcenter.bintray.com</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <!-- Spring Boot stuff -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
-    </dependency>
-    <!--<dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-cache</artifactId>
-    </dependency>-->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-jooq</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -61,28 +58,54 @@
       <artifactId>spring-boot-starter-freemarker</artifactId>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-configuration-processor</artifactId>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib-jre8</artifactId>
+      <version>${kotlin.version}</version>
+    </dependency>
+
+    <!-- Logging -->
+    <dependency>
+      <groupId>io.github.microutils</groupId>
+      <artifactId>kotlin-logging</artifactId>
+      <version>1.4.4</version>
+    </dependency>
+
+    <!-- Database -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-stdlib-jre8</artifactId>
-      <version>${kotlin.version}</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jooq</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+    </dependency>
+
+    <!-- HTTP library -->
+    <dependency>
+      <groupId>com.github.kittinunf.fuel</groupId>
+      <artifactId>fuel</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+
+    <!-- JSON parser / binding of GSON library to Kotlin -->
+    <dependency>
+      <groupId>com.github.salomonbrys.kotson</groupId>
+      <artifactId>kotson</artifactId>
+      <version>2.5.0</version>
     </dependency>
 
     <!-- Tests -->
