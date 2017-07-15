@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "blog",
+      "type": "java.lang.String",
+      "description": "Description for blog."
+    },
+    {
+      "name": "blog.admin",
+      "type": "java.lang.String",
+      "description": "Description for blog.admin."
+    },
+    {
+      "name": "blog.admin.username",
+      "type": "java.lang.String",
+      "description": "Description for blog.admin.username."
+    },
+    {
+      "name": "blog.admin.password",
+      "type": "java.lang.String",
+      "description": "Description for blog.admin.password."
+    }
+  ]
+}

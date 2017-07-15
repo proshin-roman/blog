@@ -17,7 +17,7 @@ open class IndexTest {
 
     @Test
     fun testGet() {
-        assertThat(index.get(), `is`("Hello, Kotlin world!"))
+        assertThat(index.get(), `is`("index"))
     }
 }
 

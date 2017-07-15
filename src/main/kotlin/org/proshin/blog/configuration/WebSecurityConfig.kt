@@ -7,29 +7,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 
-@Configuration
-@EnableWebSecurity
-open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+@Configuration @EnableWebSecurity open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/admin/**").authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout()
-                .permitAll();
+                .logout().permitAll();
     }
 
-    @Autowired
-    fun configureGlobal(auth: AuthenticationManagerBuilder) {
+    @Autowired fun configureGlobal(auth: AuthenticationManagerBuilder, configParameters: ConfigParameters) {
         auth
                 .inMemoryAuthentication()
-                .withUser("user")
-                .password("password")
+                .withUser(configParameters.admin.username)
+                .password(configParameters.admin.password)
                 .roles("USER")
     }
 }
