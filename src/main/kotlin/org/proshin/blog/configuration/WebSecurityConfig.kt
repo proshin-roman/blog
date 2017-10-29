@@ -7,7 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 
-@Configuration @EnableWebSecurity open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+@Configuration
+@EnableWebSecurity
+open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http
                 .csrf().disable()
@@ -19,7 +21,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
                 .logout().permitAll();
     }
 
-    @Autowired fun configureGlobal(auth: AuthenticationManagerBuilder, configParameters: ConfigParameters) {
+    @Autowired
+    fun configureGlobal(auth: AuthenticationManagerBuilder, configParameters: ConfigParameters) {
         auth
                 .inMemoryAuthentication()
                 .withUser(configParameters.admin.username)

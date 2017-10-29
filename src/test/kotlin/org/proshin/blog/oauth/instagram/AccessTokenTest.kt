@@ -1,7 +1,7 @@
 package org.proshin.blog.oauth.instagram
 
 import org.junit.Test
-import org.proshin.blog.oauth.instagram.response.AccessToken
+import org.proshin.blog.socialnetwork.instagram.oauth.response.AccessToken
 import kotlin.test.expect
 
 class AccessTokenTest {

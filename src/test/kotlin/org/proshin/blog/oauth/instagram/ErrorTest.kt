@@ -1,7 +1,7 @@
 package org.proshin.blog.oauth.instagram
 
 import org.junit.Test
-import org.proshin.blog.oauth.instagram.response.Error
+import org.proshin.blog.socialnetwork.instagram.oauth.response.Error
 import kotlin.test.expect
 
 class ErrorTest {

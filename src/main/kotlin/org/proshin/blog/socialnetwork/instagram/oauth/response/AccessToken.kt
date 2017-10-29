@@ -1,8 +1,9 @@
-package org.proshin.blog.oauth.instagram.response
+package org.proshin.blog.socialnetwork.instagram.oauth.response
 
 import com.github.salomonbrys.kotson.get
 import com.github.salomonbrys.kotson.obj
 import com.github.salomonbrys.kotson.string
+import org.proshin.blog.socialnetwork.instagram.model.User
 
 class AccessToken(json: String) {
 

@@ -1,4 +1,4 @@
-package org.proshin.blog.oauth.instagram
+package org.proshin.blog.socialnetwork.instagram.oauth
 
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelError
@@ -9,8 +9,9 @@ import mu.KotlinLogging
 import org.proshin.blog.configuration.ConfigParameters
 import org.proshin.blog.dao.AccessTokens
 import org.proshin.blog.model.AccessToken.Provider.INSTAGRAM
-import org.proshin.blog.oauth.instagram.response.AccessToken
-import org.proshin.blog.oauth.instagram.response.Error
+import org.proshin.blog.socialnetwork.instagram.UsersEndpoint
+import org.proshin.blog.socialnetwork.instagram.oauth.response.AccessToken
+import org.proshin.blog.socialnetwork.instagram.oauth.response.Error
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -46,6 +47,10 @@ open class RedirectEndpoint {
                     override fun success(request: Request, response: Response, value: String) {
                         val accessToken = accessTokens.create(INSTAGRAM, AccessToken(value).accessToken)
                         logger.info("Access token has been successfully received: $accessToken")
+
+                        val user = UsersEndpoint(accessToken.token)
+                                .getSelf()
+                        logger.info("User has been received: $user")
                     }
                 })
         return ResponseEntity.ok().build()
