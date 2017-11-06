@@ -1,0 +1,28 @@
+a.icon {
+    color: #333;
+}
+
+a.icon:hover {
+    color: #134fb8;
+    text-decoration: none;
+}
+
+.social-links i.fa {
+    font-size: 32px;
+    padding-right: 10px;
+}
+
+.tags {
+    text-align: right;
+}
+
+@media (max-width: 767px) {
+    .avatar {
+        max-width: 262px;
+        display: inline;
+    }
+
+    .profile {
+        text-align: center;
+    }
+}

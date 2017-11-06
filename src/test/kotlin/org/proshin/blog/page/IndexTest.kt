@@ -7,6 +7,7 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.ui.ModelMap
 
 @SpringBootTest
 @RunWith(SpringRunner::class)
@@ -17,7 +18,7 @@ open class IndexTest {
 
     @Test
     fun testGet() {
-        assertThat(index.get(), `is`("index"))
+        assertThat(index.get(ModelMap()), `is`("index"))
     }
 }
 
