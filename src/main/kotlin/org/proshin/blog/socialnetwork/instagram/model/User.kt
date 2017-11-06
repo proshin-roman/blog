@@ -2,6 +2,7 @@ package org.proshin.blog.socialnetwork.instagram.model
 
 import com.github.salomonbrys.kotson.get
 import com.github.salomonbrys.kotson.long
+import com.github.salomonbrys.kotson.nullString
 import com.github.salomonbrys.kotson.string
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -22,12 +23,12 @@ class User(json: JsonObject) {
         fullName = json["full_name"].string
         profilePicture = json["profile_picture"].string
         if (json.has("bio")) {
-            this.bio = json["bio"].string
+            this.bio = json["bio"].nullString
         } else {
             this.bio = null
         }
         if (json.has("website")) {
-            this.website = json["website"].string
+            this.website = json["website"].nullString
         } else {
             this.website = null
         }
