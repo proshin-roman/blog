@@ -16,4 +16,25 @@
       </column>
     </createTable>
   </changeSet>
+
+  <changeSet id="create-table-post" author="proshin">
+    <createTable tableName="post">
+      <column name="id" type="${primary-key-type}" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="pk_post"/>
+      </column>
+      <column name="title" type="varchar(2048)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="creation_dt" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="publication_dt" type="datetime"/>
+      <column name="published" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="content" type="text">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
 </databaseChangeLog>

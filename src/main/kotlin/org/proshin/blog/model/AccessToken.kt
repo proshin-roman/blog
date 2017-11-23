@@ -12,8 +12,7 @@ class AccessToken {
     constructor(id: Long, jdbcTemplate: JdbcTemplate) {
         try {
             val map = jdbcTemplate
-                    .queryForMap(
-                            "select id, provider, token from access_token where id = ?", id)
+                .queryForMap("select id, provider, token from access_token where id = ?", id)
             this.id = map["id"] as Long
             this.provider = Provider.valueOf(map["provider"] as String)
             this.token = map["token"] as String
@@ -32,7 +31,5 @@ class AccessToken {
         INSTAGRAM
     }
 
-    override fun toString(): String {
-        return "AccessToken(id=$id, provider=$provider, token='$token')"
-    }
+    override fun toString(): String = "AccessToken(id=$id, provider=$provider, token='$token')"
 }

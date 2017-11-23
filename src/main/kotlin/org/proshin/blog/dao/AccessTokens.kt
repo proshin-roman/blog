@@ -1,16 +1,12 @@
 package org.proshin.blog.dao
 
 import org.proshin.blog.model.AccessToken
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Repository
 
-@Component
-open class AccessTokens {
-
-    @Autowired
-    lateinit var jdbcTemplate: JdbcTemplate
+@Repository
+open class AccessTokens(val jdbcTemplate: JdbcTemplate) {
 
     fun create(provider: AccessToken.Provider, token: String): AccessToken {
         val keyHolder = GeneratedKeyHolder()
