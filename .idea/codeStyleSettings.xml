@@ -47,6 +47,11 @@
           <option name="PRIMARY_KEY_NAME_TEMPLATE" value="pk_{table}_{columns}" />
           <option name="FOREIGN_KEY_NAME_TEMPLATE" value="fk_{table}_{ref_table}_{ref_columns}" />
         </SqlCodeStyleSettings>
+        <codeStyleSettings language="JAVA">
+          <option name="KEEP_FIRST_COLUMN_COMMENT" value="false" />
+          <option name="KEEP_CONTROL_STATEMENT_IN_ONE_LINE" value="false" />
+          <option name="WRAP_LONG_LINES" value="true" />
+        </codeStyleSettings>
         <codeStyleSettings language="XML">
           <indentOptions>
             <option name="INDENT_SIZE" value="2" />

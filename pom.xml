@@ -61,6 +61,13 @@
       <optional>true</optional>
     </dependency>
 
+    <!-- Markdown to HTML -->
+    <dependency>
+      <groupId>com.atlassian.commonmark</groupId>
+      <artifactId>commonmark</artifactId>
+      <version>0.10.0</version>
+    </dependency>
+
     <!-- Make life easier -->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -103,6 +110,10 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
     </dependency>
   </dependencies>
 
