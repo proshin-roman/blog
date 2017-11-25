@@ -10,5 +10,5 @@ public interface Posts {
     Post selectOne(@NonNull Long id) throws PostNotFoundException;
 
     @NonNull
-    List<Post> selectPage(int offset, int count);
+    List<Post> selectPage(int offset, int count, boolean publishedOnly);
 }

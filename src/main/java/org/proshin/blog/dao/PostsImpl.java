@@ -40,10 +40,13 @@ public class PostsImpl implements Posts {
 
     @NonNull
     @Override
-    public List<Post> selectPage(int offset, int count) {
+    public List<Post> selectPage(int offset, int count, boolean publishedOnly) {
         return jdbcTemplate.query("" +
                 "select id, title, creation_dt, publication_dt, published, content " +
                 " from post p " +
+                (publishedOnly
+                    ? " where p.published is true "
+                    : "") +
                 " order by publication_dt desc " +
                 " limit ?, ?",
             new Object[]{offset, count},

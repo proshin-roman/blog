@@ -24,6 +24,11 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="/"><@spring.message "blog-title"/></a>
                     </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="/login">Вход</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
                 </div>
             </nav>
             <div class="row">
