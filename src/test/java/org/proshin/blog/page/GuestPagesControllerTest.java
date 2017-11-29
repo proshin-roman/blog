@@ -1,7 +1,7 @@
 package org.proshin.blog.page;
 
+import static java.time.LocalDateTime.now;
 import static java.util.Collections.singletonList;
-import java.util.Date;
 import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -17,7 +17,7 @@ public class GuestPagesControllerTest {
     @Test
     public void testThatIndexPageShowsFirstArticles() throws Exception {
         List<Post> postsForIndexPage = singletonList(
-            new Post(10L, "Test post #10", new Date(), new Date(), true, "content"));
+            new Post(10L, "Test post #10", now(), now(), true, "content"));
 
         Posts posts = mock(Posts.class);
         when(posts.selectPage(0, 10, true))
@@ -32,7 +32,7 @@ public class GuestPagesControllerTest {
     @Test
     public void testThatViewPostShowsTheRequestedPost() throws Exception {
         Posts posts = mock(Posts.class);
-        Post requestedPost = new Post(10L, "Test post #10", new Date(), new Date(), true,
+        Post requestedPost = new Post(10L, "Test post #10", now(), now(), true,
             "*markdown* content");
         when(posts.selectOne(10L))
             .thenReturn(requestedPost);

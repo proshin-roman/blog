@@ -45,9 +45,12 @@
                                 <a href="/admin/posts/${post.id}/delete">Удалить</a>
                             </small>
                         </td>
-                        <td>${post.creationDate?string["HH:mm dd.MM.yyyy"]}</td>
+                        <td>${post.creationDate.format("HH:mm dd.MM.yyyy")}</td>
                         <td>
-                        ${post.published?string("Да", "Нет")} / ${post.publicationDate?string["HH:mm dd.MM.yyyy"]}
+                        ${post.published?string("Да", "Нет")}
+                            <#if post.publicationDate??>
+                                / ${post.publicationDate.format("HH:mm dd.MM.yyyy")}
+                            </#if>
                         </td>
                     </tr>
                 </#list>
