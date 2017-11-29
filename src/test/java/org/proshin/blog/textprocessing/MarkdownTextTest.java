@@ -11,7 +11,7 @@ public class MarkdownTextTest {
             is("<p>This is <em>Sparta</em></p>\n"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void testThatMarkdownDoesNotAllowNull() throws Exception {
         new MarkdownText(null);
     }
