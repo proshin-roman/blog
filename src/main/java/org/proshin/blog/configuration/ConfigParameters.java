@@ -1,6 +1,7 @@
 package org.proshin.blog.configuration;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.NonNull;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -19,22 +20,22 @@ public class ConfigParameters {
         return admin;
     }
 
-    public ConfigParameters setAdmin(Admin admin) {
+    public void setAdmin(Admin admin) {
         this.admin = admin;
-        return this;
     }
 
     public Instagram getInstagram() {
         return instagram;
     }
 
-    public ConfigParameters setInstagram(Instagram instagram) {
+    public void setInstagram(Instagram instagram) {
         this.instagram = instagram;
-        return this;
     }
 
     public static class Admin {
+        @NotNull
         private String username;
+        @NotNull
         private String password;
 
         @NonNull
@@ -42,9 +43,8 @@ public class ConfigParameters {
             return username;
         }
 
-        public Admin setUsername(String username) {
+        public void setUsername(String username) {
             this.username = username;
-            return this;
         }
 
         @NonNull
@@ -52,9 +52,8 @@ public class ConfigParameters {
             return password;
         }
 
-        public Admin setPassword(String password) {
+        public void setPassword(String password) {
             this.password = password;
-            return this;
         }
     }
 
@@ -67,27 +66,24 @@ public class ConfigParameters {
             return clientId;
         }
 
-        public Instagram setClientId(String clientId) {
+        public void setClientId(String clientId) {
             this.clientId = clientId;
-            return this;
         }
 
         public String getClientSecret() {
             return clientSecret;
         }
 
-        public Instagram setClientSecret(String clientSecret) {
+        public void setClientSecret(String clientSecret) {
             this.clientSecret = clientSecret;
-            return this;
         }
 
         public String getRedirectUri() {
             return redirectUri;
         }
 
-        public Instagram setRedirectUri(String redirectUri) {
+        public void setRedirectUri(String redirectUri) {
             this.redirectUri = redirectUri;
-            return this;
         }
     }
 }
