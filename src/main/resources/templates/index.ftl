@@ -1,23 +1,21 @@
+<#-- @ftlvariable name="posts" type="java.util.List<org.proshin.blog.model.Post>"-->
+<#-- @ftlvariable name="post" type="org.proshin.blog.model.Post"-->
+
 <#import "/spring.ftl" as spring>
 <#include "base.ftl">
 
 <#macro page_body>
     <#list posts as post>
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <dl>
+        <dt>
             <a href="/post/${post.id}">
-                <h3 class="panel-title">${post.title}</h3>
+                <h2>${post.title}</h2>
             </a>
-        </div>
-        <div class="panel-body">
-            TO BE DONE LATER
-            <div class="tags">
-                <button type="button" class="btn btn-default btn-xs">tag #1</button>
-                <button type="button" class="btn btn-default btn-xs">tag #2</button>
-                <button type="button" class="btn btn-default btn-xs">tag #3</button>
-            </div>
-        </div>
-    </div>
+        </dt>
+        <dd>${post.publicationDate.format("dd.MM.yyyy")}</dd>
+    </dl>
+    <#else>
+    <p class="lead"><@spring.message "page.index.there-is-no-posts"/></p>
     </#list>
 </#macro>
 
