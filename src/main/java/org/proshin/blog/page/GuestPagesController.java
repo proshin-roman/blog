@@ -18,16 +18,16 @@ public class GuestPagesController {
         this.posts = posts;
     }
 
-    @GetMapping(value = {"", "/"})
+    @GetMapping(value = { "", "/" })
     public ModelAndView getIndex(@RequestParam(defaultValue = "20") int count) {
         return new SmartModelAndView("index")
-            .with("posts", posts.selectPage(0, count, true));
+                .with("posts", posts.selectPage(0, count, true));
     }
 
     @GetMapping("/post/{id:[\\d]+}")
     public ModelAndView getPost(@PathVariable Long id) {
         return new SmartModelAndView("post")
-            .with("post", posts.selectOne(id))
-            .with("content", new MarkdownText(posts.selectOne(id).getContent()).getAsHtml());
+                .with("post", posts.selectOne(id))
+                .with("content", new MarkdownText(posts.selectOne(id).getContent()).getAsHtml());
     }
 }

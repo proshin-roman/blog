@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/admin")
 public class AdminPagesController {
 
-    @GetMapping({"", "/dashboard"})
+    @GetMapping({ "", "/dashboard" })
     public ModelAndView get() {
         return new SmartModelAndView("admin/dashboard");
     }

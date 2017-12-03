@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="posts" type="java.util.List<org.proshin.blog.model.Post>"-->
 <#-- @ftlvariable name="post" type="org.proshin.blog.model.Post"-->
 
 <#import "/spring.ftl" as spring>

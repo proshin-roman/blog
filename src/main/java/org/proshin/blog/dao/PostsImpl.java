@@ -33,11 +33,11 @@ public class PostsImpl implements Posts {
     public Post selectOne(@NonNull Long id) throws PostNotFoundException {
         try {
             return jdbcTemplate
-                .queryForObject(
-                    "select id, title, creation_dt, publication_dt, published, content from post where id = ?",
-                    new Object[]{id},
-                    new int[]{BIGINT},
-                    postRowMapper);
+                    .queryForObject(
+                            "select id, title, creation_dt, publication_dt, published, content from post where id = ?",
+                            new Object[] { id },
+                            new int[] { BIGINT },
+                            postRowMapper);
         } catch (Exception e) {
             throw new PostNotFoundException(format("Post %d not found", id), e);
         }
@@ -50,12 +50,13 @@ public class PostsImpl implements Posts {
                 "select id, title, creation_dt, publication_dt, published, content " +
                 " from post p " +
                 (publishedOnly
-                    ? " where p.published is true "
-                    : "") +
+                        ? " where p.published is true "
+                        : "")
+                +
                 " order by publication_dt desc " +
                 " limit ?, ?",
-            new Object[]{offset, count},
-            postRowMapper);
+                new Object[] { offset, count },
+                postRowMapper);
     }
 
     @Override
@@ -65,10 +66,11 @@ public class PostsImpl implements Posts {
 
     @Override
     public void publish(Long id) throws PostNotFoundException {
-        int updatedRows = jdbcTemplate
-            .update("update post set published = true, publication_dt = ? where id = ?",
-                new Object[]{Timestamp.valueOf(LocalDateTime.now()), id},
-                new int[]{TIMESTAMP, BIGINT});
+        int updatedRows =
+                jdbcTemplate
+                        .update("update post set published = true, publication_dt = ? where id = ?",
+                                new Object[] { Timestamp.valueOf(LocalDateTime.now()), id },
+                                new int[] { TIMESTAMP, BIGINT });
         if (updatedRows == 0) {
             throw new PostNotFoundException(format("Post %d not found", id));
         }
@@ -76,10 +78,11 @@ public class PostsImpl implements Posts {
 
     @Override
     public void unpublish(Long id) throws PostNotFoundException {
-        int updatedRows = jdbcTemplate
-            .update("update post set publication_dt = null, published = false where id = ?",
-                new Object[]{id},
-                new int[]{BIGINT});
+        int updatedRows =
+                jdbcTemplate
+                        .update("update post set publication_dt = null, published = false where id = ?",
+                                new Object[] { id },
+                                new int[] { BIGINT });
         if (updatedRows == 0) {
             throw new PostNotFoundException(format("Post %d not found", id));
         }
@@ -87,10 +90,11 @@ public class PostsImpl implements Posts {
 
     @Override
     public void delete(Long id) throws PostNotFoundException {
-        int updatedRows = jdbcTemplate
-            .update("delete from post where id = ?",
-                new Object[]{id},
-                new int[]{BIGINT});
+        int updatedRows =
+                jdbcTemplate
+                        .update("delete from post where id = ?",
+                                new Object[] { id },
+                                new int[] { BIGINT });
         if (updatedRows == 0) {
             throw new PostNotFoundException(format("Post %d not found", id));
         }
@@ -100,14 +104,14 @@ public class PostsImpl implements Posts {
         @Override
         public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Post(
-                rs.getLong("id"),
-                rs.getString("title"),
-                rs.getTimestamp("creation_dt").toLocalDateTime(),
-                Optional.ofNullable(rs.getTimestamp("publication_dt"))
-                    .map(Timestamp::toLocalDateTime)
-                    .orElse(null),
-                rs.getBoolean("published"),
-                rs.getString("content"));
+                    rs.getLong("id"),
+                    rs.getString("title"),
+                    rs.getTimestamp("creation_dt").toLocalDateTime(),
+                    Optional.ofNullable(rs.getTimestamp("publication_dt"))
+                            .map(Timestamp::toLocalDateTime)
+                            .orElse(null),
+                    rs.getBoolean("published"),
+                    rs.getString("content"));
         }
     }
 }

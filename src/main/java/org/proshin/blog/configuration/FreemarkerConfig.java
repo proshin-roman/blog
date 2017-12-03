@@ -10,12 +10,13 @@ import org.springframework.context.annotation.Configuration;
 public class FreemarkerConfig extends FreeMarkerAutoConfiguration.FreeMarkerWebConfiguration {
 
     @Autowired
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     private freemarker.template.Configuration configuration;
 
     @PostConstruct
     public void postConstruct() {
         configuration.setObjectWrapper(
-            new Java8ObjectWrapper(freemarker.template.Configuration.getVersion())); // VERSION_2_3_26
+                new Java8ObjectWrapper(freemarker.template.Configuration.getVersion())); // VERSION_2_3_26
     }
 
 }
