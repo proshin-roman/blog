@@ -3,24 +3,39 @@
 
 <#macro title><@spring.message "page.login.title"/> :: <@spring.message "blog-title"/></#macro>
 <#macro page_body>
-<div class="panel panel-info">
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
+<style>
+    .input-group {
+        margin-bottom: 25px;
+    }
+
+    .g-recaptcha {
+        margin-bottom: 25px;
+        width: 100%
+    }
+
+    .g-recaptcha > div {
+        margin: 0 auto;
+    }
+</style>
+
+<div class="panel panel-default">
     <div class="panel-heading">
-        <div class="panel-title"><@spring.message "page.login.title"/></div>
+        <h3 class="panel-title"><@spring.message "page.login.title"/></h3>
     </div>
 
     <div style="padding-top:30px" class="panel-body">
 
-        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+        <form class="form-horizontal" role="form" method="post">
 
-        <form id="loginform" class="form-horizontal" role="form" method="post">
-
-            <div style="margin-bottom: 25px" class="input-group">
+            <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                 <input id="login-username" type="text" class="form-control" name="username"
                        value="admin" placeholder="username or email">
             </div>
 
-            <div style="margin-bottom: 25px" class="input-group">
+            <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                 <input id="login-password" type="password" class="form-control" name="password"
                        value="123456" placeholder="password">
@@ -35,9 +50,11 @@
                 </div>
             </div>
 
+            <div class="g-recaptcha input-group" data-sitekey="${reCaptchaKey}"></div>
+
             <div style="margin-top:10px" class="form-group">
                 <div class="col-sm-12 controls">
-                    <button id="btn-login" href="#" class="btn btn-success" type="submit">
+                    <button id="btn-login" href="#" class="btn btn-primary btn-block btn-lg" type="submit">
                         <@spring.message "page.login.form.submit"/>
                     </button>
                 </div>

@@ -1,5 +1,6 @@
 package org.proshin.blog.configuration;
 
+import freemarker.template.TemplateExceptionHandler;
 import javax.annotation.PostConstruct;
 import no.api.freemarker.java8.Java8ObjectWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,11 @@ public class FreemarkerConfig extends FreeMarkerAutoConfiguration.FreeMarkerWebC
 
     @PostConstruct
     public void postConstruct() {
-        configuration.setObjectWrapper(
-                new Java8ObjectWrapper(freemarker.template.Configuration.getVersion())); // VERSION_2_3_26
+        configuration
+                .setObjectWrapper(
+                        new Java8ObjectWrapper(freemarker.template.Configuration.getVersion())); // VERSION_2_3_26
+
+        configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
     }
 
 }

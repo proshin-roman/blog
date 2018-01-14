@@ -8,7 +8,6 @@
     <head>
         <meta charset="UTF-8">
         <title><@title/></title>
-
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
               integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous"/>
@@ -61,11 +60,6 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="/"><@spring.message "blog-title"/></a>
                     </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/login">Вход</a></li>
-                        </ul>
-                    </div><!-- /.navbar-collapse -->
                 </div>
             </nav>
             <div class="row">
@@ -100,12 +94,6 @@
                 </div>
             </div>
         </div>
-
-    <#-- TODO: uncomment it when JS is really needed -->
-    <#--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>-->
     </body>
 </html>
 </#macro>

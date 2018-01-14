@@ -44,6 +44,21 @@
             "name": "blog.dynamo.secretKey",
             "type": "java.lang.String",
             "description": "Secret key for access to DynamoDB service."
+        },
+        {
+            "name": "blog.reCaptcha",
+            "type": "java.lang.String",
+            "description": "Google reCaptcha specific configuration."
+        },
+        {
+            "name": "blog.reCaptcha.key",
+            "type": "java.lang.String",
+            "description": "Google reCaptcha key."
+        },
+        {
+            "name": "blog.reCaptcha.secret",
+            "type": "java.lang.String",
+            "description": "Google reCaptcha secret."
         }
     ]
 }

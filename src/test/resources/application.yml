@@ -7,3 +7,6 @@ blog:
     region: us-east-1
     accessKey: dummy
     secretKey: dummy
+  reCaptcha:
+    key: dummy
+    secret: dummy
