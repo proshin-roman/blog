@@ -62,9 +62,27 @@ public class ConfigParameters {
 
     @ToString
     public static class Dynamo {
+        @NotNull
+        private String region;
+        private String endpoint;
         private String accessKey;
         private String secretKey;
-        private String endpoint;
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+        public String getEndpoint() {
+            return endpoint;
+        }
+
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
+        }
 
         public String getAccessKey() {
             return accessKey;
@@ -80,14 +98,6 @@ public class ConfigParameters {
 
         public void setSecretKey(String secretKey) {
             this.secretKey = secretKey;
-        }
-
-        public String getEndpoint() {
-            return endpoint;
-        }
-
-        public void setEndpoint(String endpoint) {
-            this.endpoint = endpoint;
         }
     }
 }

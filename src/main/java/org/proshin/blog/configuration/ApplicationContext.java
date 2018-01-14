@@ -3,8 +3,6 @@ package org.proshin.blog.configuration;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
-import static com.amazonaws.regions.Regions.EU_CENTRAL_1;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import org.springframework.context.annotation.Bean;
@@ -21,28 +19,32 @@ public class ApplicationContext {
 
     @Bean
     public DynamoDB getDynamoDB(ConfigParameters configParameters) {
-        AmazonDynamoDB amazonDynamoDB;
-        if (configParameters.getDynamo() != null && configParameters.getDynamo().getEndpoint() != null) {
-            amazonDynamoDB =
-                    AmazonDynamoDBClientBuilder
-                            .standard()
-                            .withEndpointConfiguration(
-                                    new EndpointConfiguration(
-                                            configParameters.getDynamo().getEndpoint(),
-                                            EU_CENTRAL_1.getName()))
-                            .withCredentials(
-                                    new AWSStaticCredentialsProvider(
-                                            new BasicAWSCredentials(
-                                                    configParameters.getDynamo().getAccessKey(),
-                                                    configParameters.getDynamo().getSecretKey())))
-                            .build();
+        ConfigParameters.Dynamo dynamoConfig = configParameters.getDynamo();
+
+        AmazonDynamoDBClientBuilder clientBuilder =
+                AmazonDynamoDBClientBuilder
+                        .standard();
+
+        if (dynamoConfig.getEndpoint() != null) {
+            clientBuilder
+                    .withEndpointConfiguration(
+                            new EndpointConfiguration(
+                                    dynamoConfig.getEndpoint(),
+                                    dynamoConfig.getRegion()));
         } else {
-            amazonDynamoDB =
-                    AmazonDynamoDBClientBuilder
-                            .standard()
-                            .withRegion(EU_CENTRAL_1)
-                            .build();
+            clientBuilder
+                    .withRegion(dynamoConfig.getRegion());
         }
-        return new DynamoDB(amazonDynamoDB);
+
+        if (dynamoConfig.getAccessKey() != null && dynamoConfig.getSecretKey() != null) {
+            clientBuilder
+                    .withCredentials(
+                            new AWSStaticCredentialsProvider(
+                                    new BasicAWSCredentials(
+                                            dynamoConfig.getAccessKey(),
+                                            dynamoConfig.getSecretKey())));
+        }
+
+        return new DynamoDB(clientBuilder.build());
     }
 }

@@ -3,6 +3,7 @@ blog:
     username: dummy
     password: dummy
   dynamo:
+    endpoint: http://localhost:8000
+    region: us-east-1
     accessKey: dummy
     secretKey: dummy
-    endpoint: http://localhost:8000
