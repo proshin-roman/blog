@@ -2,13 +2,12 @@ package org.proshin.blog.configuration;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import lombok.NonNull;
-import lombok.ToString;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
-@ToString
+@Data
 @Component
 @Validated
 @ConfigurationProperties("blog")
@@ -17,87 +16,31 @@ public class ConfigParameters {
     private Admin admin;
     @Valid
     private Dynamo dynamo;
+    @Valid
+    private ReCaptcha reCaptcha;
 
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
-
-    public Dynamo getDynamo() {
-        return dynamo;
-    }
-
-    public void setDynamo(Dynamo dynamo) {
-        this.dynamo = dynamo;
-    }
-
-    @ToString
+    @Data
     public static class Admin {
         @NotNull
         private String username;
         @NotNull
         private String password;
-
-        @NonNull
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        @NonNull
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
     }
 
-    @ToString
+    @Data
     public static class Dynamo {
         @NotNull
         private String region;
         private String endpoint;
         private String accessKey;
         private String secretKey;
+    }
 
-        public String getRegion() {
-            return region;
-        }
-
-        public void setRegion(String region) {
-            this.region = region;
-        }
-
-        public String getEndpoint() {
-            return endpoint;
-        }
-
-        public void setEndpoint(String endpoint) {
-            this.endpoint = endpoint;
-        }
-
-        public String getAccessKey() {
-            return accessKey;
-        }
-
-        public void setAccessKey(String accessKey) {
-            this.accessKey = accessKey;
-        }
-
-        public String getSecretKey() {
-            return secretKey;
-        }
-
-        public void setSecretKey(String secretKey) {
-            this.secretKey = secretKey;
-        }
+    @Data
+    public static class ReCaptcha {
+        @NotNull
+        private String key;
+        @NotNull
+        private String secret;
     }
 }
