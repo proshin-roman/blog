@@ -1,6 +1,7 @@
 package org.proshin.blog.page;
 
 import lombok.NonNull;
+import org.proshin.blog.exception.PostNotFoundException;
 import org.proshin.blog.model.Post;
 import org.proshin.blog.model.Posts;
 import org.proshin.blog.textprocessing.MarkdownText;
@@ -28,6 +29,9 @@ public class GuestPagesController {
     @GetMapping("/post/{id}")
     public ModelAndView getPost(@PathVariable String id) {
         Post post = posts.selectOne(id);
+        if (!post.isPublished()) {
+            throw new PostNotFoundException(String.format("Post %s not found", id));
+        }
         return new SmartModelAndView("post")
                 .with("post", post)
                 .with("content", new MarkdownText(post.getContent()).getAsHtml());

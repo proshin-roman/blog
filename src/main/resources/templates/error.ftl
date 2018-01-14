@@ -2,7 +2,8 @@
 <#include "base.ftl">
 
 <#macro page_body>
-<h1>Unknown error! I'm sorry... but I'm already working on it!</h1>
+<h1><@spring.message "page.error.any.header"/></h1>
+<p><@spring.message "page.error.any.message"/></p>
 </#macro>
 
 <@display_page/>

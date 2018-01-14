@@ -1,4 +1,4 @@
-package org.proshin.blog.page;
+package org.proshin.blog;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
-import org.proshin.blog.DynamoRunner;
 import org.proshin.blog.dynamodb.DynamoPosts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-public class AbstractMvcTest {
+public class AbstractIntegrationTest {
     @Autowired
     private MockMvc mvc;
     @Rule
