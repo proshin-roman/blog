@@ -26,6 +26,16 @@
             "description": "DynamoDB specific configuration."
         },
         {
+            "name": "blog.dynamo.accessKey",
+            "type": "java.lang.String",
+            "description": "Access key for access to DynamoDB service."
+        },
+        {
+            "name": "blog.dynamo.secretKey",
+            "type": "java.lang.String",
+            "description": "Secret key for access to DynamoDB service."
+        },
+        {
             "name": "blog.dynamo.endpoint",
             "type": "java.lang.String",
             "description": "Endpoint of the DynamoDB service."

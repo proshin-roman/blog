@@ -3,4 +3,6 @@ blog:
     username: dummy
     password: dummy
   dynamo:
+    accessKey: dummy
+    secretKey: dummy
     endpoint: http://localhost:8000

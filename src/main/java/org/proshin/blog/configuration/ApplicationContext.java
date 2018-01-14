@@ -1,5 +1,7 @@
 package org.proshin.blog.configuration;
 
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import static com.amazonaws.regions.Regions.EU_CENTRAL_1;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
@@ -28,6 +30,11 @@ public class ApplicationContext {
                                     new EndpointConfiguration(
                                             configParameters.getDynamo().getEndpoint(),
                                             EU_CENTRAL_1.getName()))
+                            .withCredentials(
+                                    new AWSStaticCredentialsProvider(
+                                            new BasicAWSCredentials(
+                                                    configParameters.getDynamo().getAccessKey(),
+                                                    configParameters.getDynamo().getSecretKey())))
                             .build();
         } else {
             amazonDynamoDB =

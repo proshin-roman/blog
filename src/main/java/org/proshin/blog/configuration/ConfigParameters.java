@@ -62,7 +62,25 @@ public class ConfigParameters {
 
     @ToString
     public static class Dynamo {
+        private String accessKey;
+        private String secretKey;
         private String endpoint;
+
+        public String getAccessKey() {
+            return accessKey;
+        }
+
+        public void setAccessKey(String accessKey) {
+            this.accessKey = accessKey;
+        }
+
+        public String getSecretKey() {
+            return secretKey;
+        }
+
+        public void setSecretKey(String secretKey) {
+            this.secretKey = secretKey;
+        }
 
         public String getEndpoint() {
             return endpoint;
