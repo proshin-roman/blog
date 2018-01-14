@@ -26,5 +26,6 @@ deploy:
   bucket_name: $AWS_BUCKET_NAME
   skip_cleanup: true
   on:
-      branch: master
+    branch: master
+    tags: true
   zip_file: target/blog.jar
