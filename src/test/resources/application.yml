@@ -1,15 +1,6 @@
-spring:
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=FALSE
-    username: dummy
-    password: dummy
-    driver-class-name: org.h2.Driver
-    hikari:
-      idle-timeout: 10000
-liquibase:
-  change-log: classpath:META-INF/changelog/changelog.xml
 blog:
   admin:
     username: dummy
     password: dummy
+  dynamo:
+    endpoint: http://localhost:8000

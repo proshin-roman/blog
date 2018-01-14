@@ -1,15 +1,14 @@
 package org.proshin.blog.page.admin;
 
-import java.beans.PropertyEditorSupport;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
-import org.proshin.blog.dao.Posts;
+import org.proshin.blog.dynamodb.DynamoPost;
+import org.proshin.blog.dynamodb.DynamoPosts;
 import org.proshin.blog.model.Post;
 import org.proshin.blog.page.SmartModelAndView;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.proshin.blog.page.bind.Html5LocalDateTimeEditorSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -26,12 +25,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/admin/posts")
 public class AdminPostsPagesController {
 
-    private final Posts posts;
-    private final JdbcTemplate jdbcTemplate;
+    private final DynamoPosts posts;
 
-    public AdminPostsPagesController(@NonNull Posts posts, @NonNull JdbcTemplate jdbcTemplate) {
+    public AdminPostsPagesController(@NonNull DynamoPosts posts) {
         this.posts = posts;
-        this.jdbcTemplate = jdbcTemplate;
     }
 
     @GetMapping({ "", "/" })
@@ -42,75 +39,60 @@ public class AdminPostsPagesController {
 
     @GetMapping("/create")
     public ModelAndView create() {
-        Post post = posts.create();
-        return new SmartModelAndView(String.format("redirect:/admin/posts/%d/edit", post.getId()));
+        return new SmartModelAndView(
+                String.format("redirect:/admin/posts/%s/edit",
+                        posts.create().getId()));
     }
 
-    @GetMapping("/{id:[\\d]+}/edit")
-    public ModelAndView edit(@PathVariable("id") Long id) {
+    @GetMapping("/{id}/edit")
+    public ModelAndView edit(@PathVariable("id") String id) {
         return new SmartModelAndView("/admin/posts/edit")
                 .with("post", posts.selectOne(id));
     }
 
-    @GetMapping("/{id:[\\d]+}/publish")
-    public ModelAndView publish(@PathVariable("id") Long id) {
-        posts.publish(id);
+    @GetMapping("/{id}/publish")
+    public ModelAndView publish(@PathVariable("id") String id) {
+        posts.selectOne(id)
+                .publish()
+                .save();
         return new SmartModelAndView("redirect:/admin/posts/");
     }
 
-    @GetMapping("/{id:[\\d]+}/unpublish")
-    public ModelAndView unpublish(@PathVariable("id") Long id) {
-        posts.unpublish(id);
+    @GetMapping("/{id}/unpublish")
+    public ModelAndView unpublish(@PathVariable("id") String id) {
+        posts.selectOne(id)
+                .unpublish()
+                .save();
         return new SmartModelAndView("redirect:/admin/posts/");
     }
 
-    @GetMapping("/{id:[\\d]+}/delete")
-    public ModelAndView delete(@PathVariable("id") Long id) {
+    @GetMapping("/{id}/delete")
+    public ModelAndView delete(@PathVariable("id") String id) {
         posts.delete(id);
         return new SmartModelAndView("redirect:/admin/posts/");
     }
 
-    @PostMapping("/{id:[\\d]+}/save")
-    public ModelAndView save(@PathVariable("id") Long id, @ModelAttribute("post") Post post,
+    @PostMapping("/{id}/save")
+    public ModelAndView save(@PathVariable("id") String id, @ModelAttribute("post") ChangedPost post,
             BindingResult bindingResult) {
-        new Post(id, post.getTitle(), post.getCreationDate(), post.getPublicationDate(), post.isPublished(),
-                post.getContent()).save(jdbcTemplate);
+        new DynamoPost(posts.getTable(), id, post.getTitle(), post.getCreationDate(), post.getPublicationDate(),
+                post.isPublished(), post.getContent())
+                        .save();
         return new SmartModelAndView("redirect:/admin/posts");
     }
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(LocalDateTime.class, new Html5LocalDateTimeEditor());
+        binder.registerCustomEditor(LocalDateTime.class, new Html5LocalDateTimeEditorSupport());
     }
 
-    public static class Html5LocalDateTimeEditor extends PropertyEditorSupport {
-
-        private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-
-        @Override
-        public String getAsText() {
-            try {
-                return Optional.ofNullable(getValue())
-                        .map(value -> ((LocalDateTime) getValue()).format(dateTimeFormatter))
-                        .orElse(null);
-            } catch (Exception e) {
-                log.error("Couldn't convert date '{}' to string", getValue(), e);
-                return null;
-            }
-        }
-
-        @Override
-        public void setAsText(String text) throws IllegalArgumentException {
-            Optional.ofNullable(text)
-                    .ifPresent(nonEmptyText -> {
-                        try {
-                            LocalDateTime newValue =
-                                    LocalDateTime.parse(nonEmptyText, dateTimeFormatter);
-                            setValue(newValue);
-                        } catch (Exception e) {
-                            log.error("Couldn't convert string '{}' to date", nonEmptyText, e);
-                        }
-                    });
-        }
+    @Data
+    private static class ChangedPost implements Post {
+        private String id;
+        private String title;
+        private LocalDateTime creationDate;
+        private LocalDateTime publicationDate;
+        private boolean published;
+        private String content;
     }
 }

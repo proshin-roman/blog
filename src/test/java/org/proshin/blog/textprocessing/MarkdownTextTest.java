@@ -8,11 +8,6 @@ public class MarkdownTextTest {
     @Test
     public void testThatMarkdownIsConvertedToHtml() throws Exception {
         assertThat(new MarkdownText("This is *Sparta*").getAsHtml(),
-            is("<p>This is <em>Sparta</em></p>\n"));
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testThatMarkdownDoesNotAllowNull() throws Exception {
-        new MarkdownText(null);
+                is("<p>This is <em>Sparta</em></p>\n"));
     }
 }

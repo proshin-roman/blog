@@ -26,12 +26,12 @@
                     </div>
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="/admin/posts">Статьи</a>
+                            <a href="/admin/posts/"><@spring.message "page.admin.posts.list.title"/></a>
                         </li>
                     </ul>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="/logout">Выход</a></li>
+                            <li><a href="/logout"><@spring.message "page.login.exit"/></a></li>
                         </ul>
                     </div>
                 </div>

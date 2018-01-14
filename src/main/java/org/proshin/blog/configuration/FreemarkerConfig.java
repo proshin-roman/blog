@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class FreemarkerConfig extends FreeMarkerAutoConfiguration.FreeMarkerWebConfiguration {
 
     @Autowired
-    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
+    @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
     private freemarker.template.Configuration configuration;
 
     @PostConstruct

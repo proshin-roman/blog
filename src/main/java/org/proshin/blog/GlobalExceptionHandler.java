@@ -20,8 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PostNotFoundException.class)
     public ModelAndView catchPostNotFoundException(PostNotFoundException exception) {
-        ModelAndView modelAndView = new ModelAndView("error/404");
-        modelAndView.setStatus(HttpStatus.NOT_FOUND);
-        return modelAndView;
+        return new SmartModelAndView("error/404")
+                .withStatus(HttpStatus.NOT_FOUND);
     }
 }

@@ -1,24 +1,34 @@
 {
-  "properties": [
-    {
-      "name": "blog",
-      "type": "java.lang.String",
-      "description": "Description for blog."
-    },
-    {
-      "name": "blog.admin",
-      "type": "java.lang.String",
-      "description": "Description for blog.admin."
-    },
-    {
-      "name": "blog.admin.username",
-      "type": "java.lang.String",
-      "description": "Description for blog.admin.username."
-    },
-    {
-      "name": "blog.admin.password",
-      "type": "java.lang.String",
-      "description": "Description for blog.admin.password."
-    }
-  ]
+    "properties": [
+        {
+            "name": "blog",
+            "type": "java.lang.String",
+            "description": "Top level keyword for blog specific configuration."
+        },
+        {
+            "name": "blog.admin",
+            "type": "java.lang.String",
+            "description": "Admin panel specific configuration."
+        },
+        {
+            "name": "blog.admin.username",
+            "type": "java.lang.String",
+            "description": "Username for authorizing to admin panel."
+        },
+        {
+            "name": "blog.admin.password",
+            "type": "java.lang.String",
+            "description": "Password for authorizing to admin panel."
+        },
+        {
+            "name": "blog.dynamo",
+            "type": "java.lang.String",
+            "description": "DynamoDB specific configuration."
+        },
+        {
+            "name": "blog.dynamo.endpoint",
+            "type": "java.lang.String",
+            "description": "Endpoint of the DynamoDB service."
+        }
+    ]
 }

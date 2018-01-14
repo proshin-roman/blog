@@ -3,10 +3,12 @@ package org.proshin.blog.configuration;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import lombok.NonNull;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
+@ToString
 @Component
 @Validated
 @ConfigurationProperties("blog")
@@ -14,7 +16,7 @@ public class ConfigParameters {
     @Valid
     private Admin admin;
     @Valid
-    private Instagram instagram;
+    private Dynamo dynamo;
 
     public Admin getAdmin() {
         return admin;
@@ -24,14 +26,15 @@ public class ConfigParameters {
         this.admin = admin;
     }
 
-    public Instagram getInstagram() {
-        return instagram;
+    public Dynamo getDynamo() {
+        return dynamo;
     }
 
-    public void setInstagram(Instagram instagram) {
-        this.instagram = instagram;
+    public void setDynamo(Dynamo dynamo) {
+        this.dynamo = dynamo;
     }
 
+    @ToString
     public static class Admin {
         @NotNull
         private String username;
@@ -57,33 +60,16 @@ public class ConfigParameters {
         }
     }
 
-    public static class Instagram {
-        private String clientId;
-        private String clientSecret;
-        private String redirectUri;
+    @ToString
+    public static class Dynamo {
+        private String endpoint;
 
-        public String getClientId() {
-            return clientId;
+        public String getEndpoint() {
+            return endpoint;
         }
 
-        public void setClientId(String clientId) {
-            this.clientId = clientId;
-        }
-
-        public String getClientSecret() {
-            return clientSecret;
-        }
-
-        public void setClientSecret(String clientSecret) {
-            this.clientSecret = clientSecret;
-        }
-
-        public String getRedirectUri() {
-            return redirectUri;
-        }
-
-        public void setRedirectUri(String redirectUri) {
-            this.redirectUri = redirectUri;
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
         }
     }
 }

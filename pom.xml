@@ -30,6 +30,11 @@
       <name>jCenter</name>
       <url>https://jcenter.bintray.com</url>
     </repository>
+    <repository>
+      <id>dynamodb-local</id>
+      <name>AWS DynamoDB Local Release Repository</name>
+      <url>https://s3-us-west-2.amazonaws.com/dynamodb-local/release</url>
+    </repository>
   </repositories>
 
   <dependencies>
@@ -77,24 +82,17 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>23.0</version>
+    </dependency>
 
-    <!-- Database -->
+    <!-- Data storage -->
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-jooq</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-dynamodb</artifactId>
+      <version>1.11.258</version>
     </dependency>
 
     <!-- JSON library -->
@@ -118,13 +116,57 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <!-- Dynamo local -->
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>DynamoDBLocal</artifactId>
+      <version>1.11.86</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>sqlite4java</artifactId>
+      <version>1.0.392</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>sqlite4java-win32-x86</artifactId>
+      <version>1.0.392</version>
+      <type>dll</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>sqlite4java-win32-x64</artifactId>
+      <version>1.0.392</version>
+      <type>dll</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>libsqlite4java-osx</artifactId>
+      <version>1.0.392</version>
+      <type>dylib</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>libsqlite4java-linux-i386</artifactId>
+      <version>1.0.392</version>
+      <type>so</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.almworks.sqlite4java</groupId>
+      <artifactId>libsqlite4java-linux-amd64</artifactId>
+      <version>1.0.392</version>
+      <type>so</type>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
@@ -146,6 +188,26 @@
           </formats>
           <check/>
         </configuration>
+      </plugin>
+      <!-- This plugin is required to run DynamoDB locally for tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.10</version>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeScope>test</includeScope>
+              <includeTypes>so,dll,dylib</includeTypes>
+              <outputDirectory>${project.basedir}/native-libs</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

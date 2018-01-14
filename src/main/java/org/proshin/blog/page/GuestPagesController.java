@@ -1,7 +1,8 @@
 package org.proshin.blog.page;
 
 import lombok.NonNull;
-import org.proshin.blog.dao.Posts;
+import org.proshin.blog.model.Post;
+import org.proshin.blog.model.Posts;
 import org.proshin.blog.textprocessing.MarkdownText;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,10 +25,11 @@ public class GuestPagesController {
                 .with("posts", posts.selectPage(0, count, true));
     }
 
-    @GetMapping("/post/{id:[\\d]+}")
-    public ModelAndView getPost(@PathVariable Long id) {
+    @GetMapping("/post/{id}")
+    public ModelAndView getPost(@PathVariable String id) {
+        Post post = posts.selectOne(id);
         return new SmartModelAndView("post")
-                .with("post", posts.selectOne(id))
-                .with("content", new MarkdownText(posts.selectOne(id).getContent()).getAsHtml());
+                .with("post", post)
+                .with("content", new MarkdownText(post.getContent()).getAsHtml());
     }
 }

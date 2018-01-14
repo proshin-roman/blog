@@ -1,15 +1,7 @@
 spring:
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/blogdb?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
-    driver-class-name: com.mysql.jdbc.Driver
-    # username: you must specify it via System or Environment variables
-    # password: you must specify it via System or Environment variables
-    hikari:
-      idle-timeout: 10000
   messages:
     fallback-to-system-locale: false
-liquibase:
-  change-log: classpath:META-INF/changelog/changelog.xml
-#logging:
-#  level.org.springframework.jdbc.core.JdbcTemplate: trace
+# blog:
+  # admin:
+    # username: you must specify it via System or Environment variables
+    # password: you must specify it via System or Environment variables
