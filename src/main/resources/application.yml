@@ -1,7 +1,11 @@
 spring:
   messages:
     fallback-to-system-locale: false
-# blog:
+blog:
+  build-info:
+    commit: @buildNumber@
+    version: @project.version@
+    repository-url: @project.url@
   # admin:
     # username: you must specify it via System or Environment variables (required param)
     # password: you must specify it via System or Environment variables (required param)

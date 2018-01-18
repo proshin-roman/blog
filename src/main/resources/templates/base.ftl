@@ -93,6 +93,23 @@
                     <@page_body/>
                 </div>
             </div>
+            <div class="row">
+                <hr/>
+                <div style="text-align: center">
+                    Version:
+                    <a href="${repositoryURL}/releases/tag/v${version}" class="btn btn-default btn-xs" target="_blank">
+                        ${version} <span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+                    </a>
+                    | Revision:
+                    <a href="${repositoryURL}/commit/${commit}" class="btn btn-default btn-xs" target="_blank">
+                        ${commit} <span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+                    </a>
+                    | Source code:
+                    <a href="${repositoryURL}" class="btn btn-default btn-xs" target="_blank">
+                        ${repositoryURL} <span class="glyphicon glyphicon-share" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
         </div>
     </body>
 </html>

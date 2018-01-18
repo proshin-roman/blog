@@ -2,6 +2,10 @@ blog:
   admin:
     username: dummy
     password: dummy
+  build-info:
+    commit: commit here
+    version: project.version here
+    repository-url: project.url here
   dynamo:
     endpoint: http://localhost:8000
     region: us-east-1

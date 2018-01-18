@@ -15,6 +15,8 @@ public class ConfigParameters {
     @Valid
     private Admin admin;
     @Valid
+    private BuildInfo buildInfo;
+    @Valid
     private Dynamo dynamo;
     @Valid
     private ReCaptcha reCaptcha;
@@ -25,6 +27,16 @@ public class ConfigParameters {
         private String username;
         @NotNull
         private String password;
+    }
+
+    @Data
+    public static class BuildInfo {
+        @NotNull
+        private String version;
+        @NotNull
+        private String commit;
+        @NotNull
+        private String repositoryUrl;
     }
 
     @Data

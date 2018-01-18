@@ -2,12 +2,12 @@
     "properties": [
         {
             "name": "blog",
-            "type": "java.lang.String",
+            "type": "org.proshin.blog.configuration.ConfigParameters",
             "description": "Top level keyword for blog specific configuration."
         },
         {
             "name": "blog.admin",
-            "type": "java.lang.String",
+            "type": "org.proshin.blog.configuration.ConfigParameters.Admin",
             "description": "Admin panel specific configuration."
         },
         {
@@ -22,7 +22,7 @@
         },
         {
             "name": "blog.dynamo",
-            "type": "java.lang.String",
+            "type": "org.proshin.blog.configuration.ConfigParameters.Dynamo",
             "description": "DynamoDB specific configuration."
         },
         {
@@ -47,7 +47,7 @@
         },
         {
             "name": "blog.reCaptcha",
-            "type": "java.lang.String",
+            "type": "org.proshin.blog.configuration.ConfigParameters.ReCaptcha",
             "description": "Google reCaptcha specific configuration."
         },
         {
@@ -59,6 +59,26 @@
             "name": "blog.reCaptcha.secret",
             "type": "java.lang.String",
             "description": "Google reCaptcha secret."
+        },
+        {
+            "name": "blog.buildInfo",
+            "type": "org.proshin.blog.configuration.ConfigParameters.BuildInfo",
+            "description": "Info about the current build."
+        },
+        {
+            "name": "blog.buildInfo.version",
+            "type": "java.lang.String",
+            "description": "Current version."
+        },
+        {
+            "name": "blog.buildInfo.commit",
+            "type": "java.lang.String",
+            "description": "Git commit hash."
+        },
+        {
+            "name": "blog.buildInfo.repositoryUrl",
+            "type": "java.lang.String",
+            "description": "URL of the source code repository."
         }
     ]
 }

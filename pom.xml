@@ -10,6 +10,40 @@
 
   <name>blog</name>
   <description>Personal blog with social networks integration</description>
+  <url>https://github.com/proshin-roman/blog</url>
+  <inceptionYear>2017</inceptionYear>
+  <licenses>
+    <license>
+      <name>Apache License</name>
+      <url>https://github.com/proshin-roman/blog/blob/master/LICENSE</url>
+      <distribution>site</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>1</id>
+      <name>Roman Proshin</name>
+      <email>roman@proshin.org</email>
+      <organization>proshin.org</organization>
+      <organizationUrl>http://proshin.org</organizationUrl>
+      <roles>
+        <role>Owner</role>
+        <role>Architect</role>
+        <role>Developer</role>
+      </roles>
+      <timezone>+3</timezone>
+    </developer>
+  </developers>
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/proshin-roman/blog/issues</url>
+  </issueManagement>
+  <scm>
+    <connection>scm:git:git@github.com:proshin-roman/blog.git</connection>
+    <developerConnection>scm:git:git@github.com:proshin-roman/blog.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/proshin-roman/blog</url>
+  </scm>
 
   <parent>
     <groupId>org.springframework.boot</groupId>
@@ -22,6 +56,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <start-class>org.proshin.blog.BlogApplication</start-class>
   </properties>
 
   <repositories>
@@ -182,6 +217,12 @@
 
   <build>
     <finalName>blog</finalName>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
@@ -218,6 +259,24 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <!-- Operate with Git revision -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+        </configuration>
       </plugin>
     </plugins>
   </build>
