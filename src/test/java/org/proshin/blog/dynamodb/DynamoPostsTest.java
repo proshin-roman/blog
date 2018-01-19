@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.proshin.blog.AbstractIntegrationTest;
@@ -64,6 +65,8 @@ public class DynamoPostsTest extends AbstractIntegrationTest {
         PersistentPost post = posts.selectOne(createdPostId);
         assertThat(post.getTitle(), is("New post"));
         assertThat(post.getContent(), is("It's a draft"));
+        assertThat(post.getCreationDate(), notNullValue());
+        assertThat(post.getPublicationDate(), notNullValue());
     }
 
     @Test(expected = PostNotFoundException.class)
