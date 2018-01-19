@@ -41,7 +41,7 @@ public class AdminPostsPagesController {
     public ModelAndView create() {
         return new SmartModelAndView(
                 String.format("redirect:/admin/posts/%s/edit",
-                        posts.create().getId()));
+                        posts.create("New post", "It's a draft").getId()));
     }
 
     @GetMapping("/{id}/edit")

@@ -2,14 +2,12 @@ package org.proshin.blog.dynamodb;
 
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
-import com.amazonaws.services.dynamodbv2.document.Page;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.ScanOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
-import com.google.common.collect.Iterables;
+import com.amazonaws.services.dynamodbv2.document.internal.PageIterable;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.time.LocalDateTime.now;
-import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonMap;
 import java.util.List;
 import lombok.NonNull;
@@ -44,31 +42,30 @@ public class DynamoPosts implements Posts {
     @NonNull
     @Override
     public List<PersistentPost> selectPage(int offset, int count, boolean publishedOnly) {
-        Page<Item, ScanOutcome> firstPage =
+        PageIterable<Item, ScanOutcome> pages =
                 publishedOnly
-                        ? Iterables.getFirst(
-                                posts.scan("published = :published",
+                        ? posts
+                                .scan("published = :published",
                                         null,
-                                        singletonMap(":published", true)).pages(),
-                                null)
-                        : Iterables.getFirst(
-                                posts.scan().pages(),
-                                null);
-        if (firstPage == null) {
-            return emptyList();
-        }
+                                        singletonMap(":published", true))
+                                .pages()
+                        : posts
+                                .scan()
+                                .pages();
 
         List<PersistentPost> dynamoPosts = newArrayList();
-        for (Item item : firstPage) {
-            dynamoPosts.add(new DynamoPost(posts, item));
-        }
+        pages.forEach(page -> {
+            page.forEach(item -> {
+                dynamoPosts.add(new DynamoPost(posts, item));
+            });
+        });
         return dynamoPosts;
     }
 
     @NonNull
     @Override
-    public PersistentPost create() {
-        return new DynamoPost(posts, "New article", now(), now(), false, "It's a draft")
+    public PersistentPost create(@NonNull String title, @NonNull String content) {
+        return new DynamoPost(posts, title, now(), now(), false, content)
                 .save();
     }
 

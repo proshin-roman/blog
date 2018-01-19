@@ -5,12 +5,18 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import lombok.extern.log4j.Log4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+@Log4j
 @Configuration
 public class ApplicationContext {
+
+    public ApplicationContext() {
+        log.info("A new instance of application context has been instantiated");
+    }
 
     @Bean
     public RestTemplate getRestTemplate() {

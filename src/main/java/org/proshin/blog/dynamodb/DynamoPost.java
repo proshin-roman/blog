@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
 import java.util.UUID;
 import lombok.NonNull;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.proshin.blog.DateToString;
 import org.proshin.blog.StringToDate;
 import org.proshin.blog.exception.PostNotFoundException;
@@ -116,5 +118,37 @@ public class DynamoPost implements PersistentPost {
                             .with("content", content));
             return new DynamoPost(posts, posts.getItem(new PrimaryKey("id", generatedId)));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        DynamoPost that = (DynamoPost) o;
+
+        return new EqualsBuilder()
+                .append(published, that.published)
+                .append(id, that.id)
+                .append(title, that.title)
+                .append(creationDate, that.creationDate)
+                .append(publicationDate, that.publicationDate)
+                .append(content, that.content)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(title)
+                .append(creationDate)
+                .append(publicationDate)
+                .append(published)
+                .append(content)
+                .toHashCode();
     }
 }

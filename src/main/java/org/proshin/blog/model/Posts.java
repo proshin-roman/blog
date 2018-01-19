@@ -12,7 +12,7 @@ public interface Posts {
     List<PersistentPost> selectPage(int offset, int count, boolean publishedOnly);
 
     @NonNull
-    PersistentPost create();
+    PersistentPost create(@NonNull String title, @NonNull String content);
 
     void delete(@NonNull String id);
 }
