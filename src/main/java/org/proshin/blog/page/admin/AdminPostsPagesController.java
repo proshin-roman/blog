@@ -1,9 +1,11 @@
 package org.proshin.blog.page.admin;
 
 import java.time.LocalDateTime;
+import javax.validation.Valid;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.NotBlank;
 import org.proshin.blog.dynamodb.DynamoPost;
 import org.proshin.blog.dynamodb.DynamoPosts;
 import org.proshin.blog.model.Post;
@@ -73,8 +75,11 @@ public class AdminPostsPagesController {
     }
 
     @PostMapping("/{id}/save")
-    public ModelAndView save(@PathVariable("id") String id, @ModelAttribute("post") ChangedPost post,
+    public ModelAndView save(@PathVariable("id") String id, @Valid @ModelAttribute("post") ChangedPost post,
             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return this.edit(id);
+        }
         new DynamoPost(posts.getTable(), id, post.getTitle(), post.getCreationDate(), post.getPublicationDate(),
                 post.isPublished(), post.getContent())
                         .save();
@@ -89,10 +94,12 @@ public class AdminPostsPagesController {
     @Data
     private static class ChangedPost implements Post {
         private String id;
+        @NotBlank
         private String title;
         private LocalDateTime creationDate;
         private LocalDateTime publicationDate;
         private boolean published;
+        @NotBlank
         private String content;
     }
 }

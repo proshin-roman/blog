@@ -15,7 +15,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Throwable.class)
     public ModelAndView catchThrowable(Throwable throwable) {
         log.error("Uncaught error!", throwable);
-        return new SmartModelAndView("error");
+        return new SmartModelAndView("error")
+                .withStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(PostNotFoundException.class)
