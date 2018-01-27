@@ -44,7 +44,7 @@
             <div class="input-group">
                 <div class="checkbox">
                     <label>
-                        <input id="login-remember" type="checkbox" name="remember" value="1">
+                        <input id="login-remember" type="checkbox" name="remember-me" checked>
                         <@spring.message "page.login.form.remember-me"/>
                     </label>
                 </div>

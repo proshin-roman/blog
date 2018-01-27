@@ -1,9 +1,10 @@
 package org.proshin.blog.page;
 
 import lombok.NonNull;
+import org.proshin.blog.Url;
 import org.proshin.blog.exception.PostNotFoundException;
+import org.proshin.blog.model.PersistentPosts;
 import org.proshin.blog.model.Post;
-import org.proshin.blog.model.Posts;
 import org.proshin.blog.textprocessing.MarkdownText;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,26 +15,29 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class GuestPagesController {
 
-    private final Posts posts;
+    private final PersistentPosts posts;
 
-    public GuestPagesController(@NonNull Posts posts) {
+    public GuestPagesController(@NonNull PersistentPosts posts) {
         this.posts = posts;
     }
 
     @GetMapping(value = { "", "/" })
     public ModelAndView getIndex(@RequestParam(defaultValue = "20") int count) {
         return new SmartModelAndView("index")
-                .with("posts", posts.selectPage(0, count, true));
+                .with("posts", posts.page(0, count, true));
     }
 
-    @GetMapping("/post/{id}")
-    public ModelAndView getPost(@PathVariable String id) {
-        Post post = posts.selectOne(id);
-        if (!post.isPublished()) {
-            throw new PostNotFoundException(String.format("Post %s not found", id));
+    @GetMapping("/post/{url}")
+    public ModelAndView getPost(@PathVariable Url url) {
+        Post post =
+                posts
+                        .postByUrl(url)
+                        .orElseThrow(() -> new PostNotFoundException(url));
+        if (!post.published()) {
+            throw new PostNotFoundException(url);
         }
         return new SmartModelAndView("post")
                 .with("post", post)
-                .with("content", new MarkdownText(post.getContent()).getAsHtml());
+                .with("content", new MarkdownText(post.content()).getAsHtml());
     }
 }

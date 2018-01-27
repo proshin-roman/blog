@@ -8,7 +8,7 @@
     <#list posts as post>
     <dl>
         <dt>
-            <a href="/post/${post.id}">
+            <a href="/post/${post.escapedUrl()}">
                 <h2>${post.title}</h2>
             </a>
         </dt>

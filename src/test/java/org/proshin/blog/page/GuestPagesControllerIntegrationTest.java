@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import static org.hamcrest.Matchers.containsString;
 import org.junit.Test;
 import org.proshin.blog.AbstractIntegrationTest;
+import org.proshin.blog.Url;
 import org.proshin.blog.dynamodb.DynamoPost;
 import org.proshin.blog.dynamodb.DynamoPosts;
 import org.proshin.blog.model.PersistentPost;
@@ -42,20 +43,20 @@ public class GuestPagesControllerIntegrationTest extends AbstractIntegrationTest
     public void testThatNonPublishedPostIsNotAvailableForGuests() throws Exception {
         PersistentPost post =
                 new DynamoPost(dynamoDB.getTable(DynamoPosts.TABLE_NAME),
-                        "Some test post", now(), now(), false, "Just a piece of content")
-                                .save();
+                        new Url("url"), "Some test post", now(), now(), false, "Just a piece of content")
+                                .persist();
         // when it's not published
-        post.unpublish().save();
+        post.unpublish().persist();
 
         getMvc()
-                .perform(get("/post/" + post.getId()))
+                .perform(get("/post/" + post.url()))
                 .andExpect(status().isNotFound());
 
         // when it's published
-        post.publish().save();
+        post.publish().persist();
 
         getMvc()
-                .perform(get("/post/" + post.getId()))
+                .perform(get("/post/" + post.url()))
                 .andExpect(status().isOk());
     }
 }

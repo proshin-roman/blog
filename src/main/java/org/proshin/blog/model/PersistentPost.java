@@ -10,5 +10,10 @@ public interface PersistentPost extends Post {
     PersistentPost unpublish();
 
     @NonNull
-    PersistentPost save();
+    PersistentPost persist();
+
+    @NonNull
+    PersistentPost update();
+
+    void delete();
 }

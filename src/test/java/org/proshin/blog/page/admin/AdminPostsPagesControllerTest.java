@@ -9,6 +9,7 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.proshin.blog.AbstractIntegrationTest;
 import org.proshin.blog.StringToDate;
+import org.proshin.blog.Url;
 import org.proshin.blog.dynamodb.DynamoPosts;
 import org.proshin.blog.exception.PostNotFoundException;
 import org.proshin.blog.model.PersistentPost;
@@ -29,12 +30,12 @@ public class AdminPostsPagesControllerTest extends AbstractIntegrationTest {
 
     @Test
     public void testGetPosts() throws Exception {
-        PersistentPost post = posts.create("Non published post", "Any test content");
+        PersistentPost post = posts.newPost(new Url("url"), "Non published post", "Any test content");
         getMvc()
                 .perform(
                         get("/admin/posts"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(post.getId())));
+                .andExpect(content().string(containsString(post.url().encoded())));
     }
 
     @Test
@@ -42,88 +43,95 @@ public class AdminPostsPagesControllerTest extends AbstractIntegrationTest {
         String location =
                 getMvc()
                         .perform(
-                                get("/admin/posts/create"))
+                                post("/admin/posts/create")
+                                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                        .param("url", "some-correct-url")
+                                        .param("title", "New blog post"))
                         .andExpect(status().isFound())
                         .andExpect(header().string("Location", startsWith("/admin/posts/")))
                         .andReturn()
                         .getResponse()
                         .getHeader("Location");
 
-        String postId =
+        String postUrl =
                 removeEnd(
                         removeStart(
                                 location,
                                 "/admin/posts/"),
                         "/edit");
 
-        PersistentPost post = posts.selectOne(postId);
-        assertThat(post.isPublished(), is(false));
+        posts.postByUrl(new Url(postUrl)).ifPresent(post -> {
+            assertThat(post.published(), is(false));
+        });
     }
 
     @Test
     public void testEdit() throws Exception {
-        PersistentPost post = posts.create("Non published post", "Any test content");
+        PersistentPost post = posts.newPost(new Url("url"), "Non published post", "Any test content");
 
         getMvc()
                 .perform(
-                        get("/admin/posts/{id}/edit", post.getId()))
+                        get("/admin/posts/{url}/edit", post.url()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString(post.getId())));
+                .andExpect(content().string(containsString(post.url().encoded())));
     }
 
     @Test
     public void testPublish() throws Exception {
-        PersistentPost post = posts.create("Non published post", "Any test content");
-        assertThat(post.isPublished(), is(false)); // it should be by default
+        PersistentPost post = posts.newPost(new Url("url"), "Non published post", "Any test content");
+        assertThat(post.published(), is(false)); // it should be by default
 
         getMvc()
                 .perform(
-                        get("/admin/posts/{id}/publish", post.getId()))
+                        get("/admin/posts/{url}/publish", post.url()))
                 .andExpect(status().isFound())
                 .andExpect(header().string("Location", "/admin/posts/"));
 
-        assertThat(posts.selectOne(post.getId()).isPublished(), is(true));
+        posts.postByUrl(post.url())
+                .ifPresent(persistentPost -> assertThat(persistentPost.published(), is(true)));
     }
 
     @Test
     public void testUnpublish() throws Exception {
         PersistentPost post =
-                posts.create("Non published post", "Any test content")
+                posts.newPost(new Url("url"), "Non published post", "Any test content")
                         .publish()
-                        .save();
-        assertThat(post.isPublished(), is(true));
+                        .persist();
+        assertThat(post.published(), is(true));
 
         getMvc()
                 .perform(
-                        get("/admin/posts/{id}/unpublish", post.getId()))
+                        get("/admin/posts/{url}/unpublish", post.url()))
                 .andExpect(status().isFound())
                 .andExpect(header().string("Location", "/admin/posts/"));
 
-        assertThat(posts.selectOne(post.getId()).isPublished(), is(false));
+        posts.postByUrl(post.url())
+                .ifPresent(persistentPost -> assertThat(persistentPost.published(), is(false)));
     }
 
     @Test(expected = PostNotFoundException.class)
     public void testDelete() throws Exception {
-        PersistentPost post = posts.create("Non published post", "Any test content");
+        PersistentPost post = posts.newPost(new Url("url"), "Non published post", "Any test content");
 
         getMvc()
                 .perform(
-                        get("/admin/posts/{id}/delete", post.getId()))
+                        get("/admin/posts/{url}/delete", post.url()))
                 .andExpect(status().isFound())
                 .andExpect(header().string("Location", "/admin/posts/"));
 
-        posts.selectOne(post.getId());
+        posts.postByUrl(post.url())
+                .orElseThrow(() -> new PostNotFoundException(post.url()));
     }
 
     @Test
     public void testSave() throws Exception {
-        PersistentPost post = posts.create("Non published post", "Any test content");
+        PersistentPost post = posts.newPost(new Url("url"), "Non published post", "Any test content");
 
         getMvc()
                 .perform(
-                        post("/admin/posts/{id}/save", post.getId())
+                        post("/admin/posts/{url}/save", post.url().encoded())
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                .param("id", post.getId())
+                                .param("url", post.url().decoded())
                                 .param("title", "New title")
                                 .param("content", "New content")
                                 .param("creationDate", "2018-01-09T13:23")
@@ -132,13 +140,14 @@ public class AdminPostsPagesControllerTest extends AbstractIntegrationTest {
                 .andExpect(status().isFound())
                 .andExpect(header().string("Location", "/admin/posts"));
 
-        PersistentPost changedPost = posts.selectOne(post.getId());
-        assertThat(changedPost.getTitle(), is("New title"));
-        assertThat(changedPost.getContent(), is("New content"));
-        assertThat(changedPost.getCreationDate(),
-                is(new StringToDate("2018-01-09T13:23").toLocalDateTime()));
-        assertThat(changedPost.getPublicationDate(),
-                is(new StringToDate("2018-01-07T13:23").toLocalDateTime()));
-        assertThat(changedPost.isPublished(), is(true));
+        posts.postByUrl(post.url()).ifPresent(changedPost -> {
+            assertThat(changedPost.title(), is("New title"));
+            assertThat(changedPost.content(), is("New content"));
+            assertThat(changedPost.creationDate(),
+                    is(new StringToDate("2018-01-09T13:23").toLocalDateTime()));
+            assertThat(changedPost.publicationDate(),
+                    is(new StringToDate("2018-01-07T13:23").toLocalDateTime()));
+            assertThat(changedPost.published(), is(true));
+        });
     }
 }

@@ -1,17 +1,18 @@
 package org.proshin.blog.model;
 
 import java.time.LocalDateTime;
+import org.proshin.blog.Url;
 
 public interface Post {
-    String getId();
+    Url url();
 
-    String getTitle();
+    String title();
 
-    LocalDateTime getCreationDate();
+    LocalDateTime creationDate();
 
-    LocalDateTime getPublicationDate();
+    LocalDateTime publicationDate();
 
-    boolean isPublished();
+    boolean published();
 
-    String getContent();
+    String content();
 }

@@ -1,5 +1,6 @@
 package org.proshin.blog.configuration;
 
+import java.util.UUID;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.client.RestTemplate;
@@ -40,6 +42,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/admin")
                 .failureHandler(failureHandler)
                 .permitAll()
+            .and()
+            .rememberMe()
+                .rememberMeParameter("remember-me")
+                .tokenValiditySeconds(60 * 60 * 24 * 10) // 10 days
+                .rememberMeServices(new PersistentTokenBasedRememberMeServices(
+                    UUID.randomUUID().toString(),
+                    http.getSharedObject(UserDetailsService.class),
+                    new MemoryTokenRepositoryImpl()))
             .and()
             .logout()
                 .permitAll()

@@ -4,11 +4,13 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import static java.time.LocalDateTime.now;
 import static java.util.Collections.singletonList;
 import java.util.List;
+import java.util.Optional;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import org.proshin.blog.Url;
 import org.proshin.blog.dynamodb.DynamoPost;
 import org.proshin.blog.dynamodb.DynamoPosts;
 import org.proshin.blog.model.PersistentPost;
@@ -23,9 +25,9 @@ public class GuestPagesControllerTest {
     public void testThatIndexPageShowsFirstArticles() throws Exception {
         List<PersistentPost> postsForIndexPage =
                 singletonList(
-                        new DynamoPost(postsTable, "10", "Test post #10", now(), now(), true, "content"));
+                        new DynamoPost(postsTable, new Url("10"), "Test post #10", now(), now(), true, "content"));
 
-        when(posts.selectPage(0, 10, true))
+        when(posts.page(0, 10, true))
                 .thenReturn(postsForIndexPage);
 
         GuestPagesController guestPagesController = new GuestPagesController(posts);
@@ -37,13 +39,13 @@ public class GuestPagesControllerTest {
     @Test
     public void testThatViewPostShowsTheRequestedPost() throws Exception {
         PersistentPost requestedPost =
-                new DynamoPost(postsTable, "10", "Test post #10", now(), now(), true,
+                new DynamoPost(postsTable, new Url("10"), "Test post #10", now(), now(), true,
                         "*markdown* content");
-        when(posts.selectOne("10"))
-                .thenReturn(requestedPost);
+        when(posts.postByUrl(new Url("10")))
+                .thenReturn(Optional.of(requestedPost));
 
         GuestPagesController guestPagesController = new GuestPagesController(posts);
-        ModelAndView modelAndView = guestPagesController.getPost("10");
+        ModelAndView modelAndView = guestPagesController.getPost(new Url("10"));
         assertThat(modelAndView.getViewName(), is("post"));
         assertThat(modelAndView.getModel().get("post"), is(requestedPost));
         assertThat(modelAndView.getModel().get("content"), is("<p><em>markdown</em> content</p>\n"));

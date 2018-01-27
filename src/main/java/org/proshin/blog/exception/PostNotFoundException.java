@@ -1,13 +1,17 @@
 package org.proshin.blog.exception;
 
 import lombok.NonNull;
+import org.proshin.blog.Url;
 
 public class PostNotFoundException extends RuntimeException {
-    public PostNotFoundException(@NonNull String message) {
-        super(message);
+    private final Url url;
+
+    public PostNotFoundException(@NonNull Url url) {
+        super(String.format("Post with URL='%s' not found", url.decoded()));
+        this.url = url;
     }
 
-    public PostNotFoundException(@NonNull String message, @NonNull Exception original) {
-        super(message, original);
+    public Url url() {
+        return url;
     }
 }

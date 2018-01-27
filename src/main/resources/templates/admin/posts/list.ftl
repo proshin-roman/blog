@@ -9,7 +9,9 @@
 <div class="row">
     <div class="col-md-12">
         <h1>
-            <a href="/admin/posts/create" class="btn btn-primary pull-right">Создать новую</a>
+            <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#dlgCreatePost">
+                <@spring.message code="page.admin.posts.list.create-new-post.title"/>
+            </button>
             <@spring.message "page.admin.posts.list.title"/>
         </h1>
     </div>
@@ -19,44 +21,92 @@
         <table class="table table-striped table-condensed">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Название</th>
-                    <th>Создана</th>
-                    <th>Опубликована</th>
+                    <th><@spring.message code="page.admin.posts.list.column.url"/></th>
+                    <th><@spring.message code="page.admin.posts.list.column.title"/></th>
+                    <th><@spring.message code="page.admin.posts.list.column.created-at"/></th>
+                    <th><@spring.message code="page.admin.posts.list.column.published"/></th>
                 </tr>
             </thead>
             <tbody>
                 <#list posts as post>
                     <tr>
                         <td>
-                            <p>${post.id}</p>
+                            <a href="/post/${post.url().encoded()}"
+                               title="<@spring.message code="page.admin.posts.list.title.url"/>">
+                                ${post.url()}
+                            </a>
                         </td>
                         <td>
-                            <a href="/post/${post.id}" title="Просмотреть">${post.title}</a>
+                            <a href="/post/${post.url().encoded()}"
+                               title="<@spring.message code="page.admin.posts.list.title.title"/>">
+                                ${post.title()}
+                            </a>
                             <br/>
                             <small>
-                                <a href="<@spring.url "/admin/posts/${post.id}/edit" />">
-                                    Редактировать
+                                <a href="<@spring.url "/admin/posts/${post.url().encoded()}/edit" />">
+                                    <@spring.message code="page.admin.posts.list.action.edit"/>
                                 </a> |
-                                <#if post.published >
-                                    <a href="/admin/posts/${post.id}/unpublish">Снять с публикации</a> |
+                                <#if post.published() >
+                                    <a href="/admin/posts/${post.url().encoded()}/unpublish">
+                                        <@spring.message code="page.admin.posts.list.action.unpublish"/>
+                                    </a> |
                                 <#else>
-                                    <a href="/admin/posts/${post.id}/publish">Опубликовать</a> |
+                                    <a href="/admin/posts/${post.url().encoded()}/publish">
+                                        <@spring.message code="page.admin.posts.list.action.publish"/>
+                                    </a> |
                                 </#if>
-                                <a href="/admin/posts/${post.id}/delete">Удалить</a>
+                                <a href="/admin/posts/${post.url().encoded()}/delete">
+                                    <@spring.message code="page.admin.posts.list.action.delete"/>
+                                </a>
                             </small>
                         </td>
-                        <td>${post.creationDate.format("HH:mm dd.MM.yyyy")}</td>
+                        <td>${post.creationDate().format("HH:mm dd.MM.yyyy")}</td>
                         <td>
-                        ${post.published?string("Да", "Нет")}
-                            <#if post.publicationDate??>
-                                / ${post.publicationDate.format("HH:mm dd.MM.yyyy")}
+                            <#if post.published()>
+                                <@spring.message code="page.admin.posts.list.column.published.yes"/>
+                            <#else>
+                                <@spring.message code="page.admin.posts.list.column.published.no"/>
+                            </#if>
+                            <#if post.publicationDate()??>
+                                / ${post.publicationDate().format("HH:mm dd.MM.yyyy")}
                             </#if>
                         </td>
                     </tr>
                 </#list>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div id="dlgCreatePost" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"><@spring.message code="page.admin.posts.list.modal.title"/></h4>
+            </div>
+            <div class="modal-body">
+                <form id="fmCreatePost" action="/admin/posts/create" method="post">
+                    <div class="form-group">
+                        <label for="url"><@spring.message code="page.admin.posts.list.modal.label.url"/></label>
+                        <input type="text" class="form-control" id="url" name="url" placeholder="URL" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"><@spring.message code="page.admin.posts.list.modal.label.title"/></label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="reset" class="btn btn-default" form="fmCreatePost" data-dismiss="modal">
+                    <@spring.message code="page.admin.posts.list.modal.button.cancel"/>
+                </button>
+                <button type="submit" class="btn btn-primary" form="fmCreatePost">
+                    <@spring.message code="page.admin.posts.list.modal.button.save"/>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 </#macro>

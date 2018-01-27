@@ -31,11 +31,11 @@ public abstract class AbstractIntegrationTest {
     private DynamoDB dynamoDB;
 
     @Before
-    public void setUpTestEnvironment() throws Exception {
+    public void setUpTestEnvironment() {
         dynamoDB.createTable(
                 DynamoPosts.TABLE_NAME,
-                singletonList(new KeySchemaElement("id", KeyType.HASH)),
-                singletonList(new AttributeDefinition("id", ScalarAttributeType.S)),
+                singletonList(new KeySchemaElement("url", KeyType.HASH)),
+                singletonList(new AttributeDefinition("url", ScalarAttributeType.S)),
                 new ProvisionedThroughput()
                         .withWriteCapacityUnits(1L)
                         .withReadCapacityUnits(1L));
