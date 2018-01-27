@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="authInfo" type="org.proshin.blog.configuration.FreemarkerConfig.AuthInfo"-->
+
 <#import "/spring.ftl" as spring>
 <#macro title><@spring.message "blog-title"/></#macro>
 <#macro page_body></#macro>
@@ -60,6 +62,18 @@
                     <div class="navbar-header">
                         <a class="navbar-brand" href="/"><@spring.message "blog-title"/></a>
                     </div>
+                    <#if authInfo.authorized() >
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="/admin/posts/"><@spring.message "page.admin.posts.list.title"/></a>
+                            </li>
+                        </ul>
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="/logout"><@spring.message "page.login.exit"/></a></li>
+                            </ul>
+                        </div>
+                    </#if>
                 </div>
             </nav>
             <div class="row">

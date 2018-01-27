@@ -8,6 +8,7 @@ import static org.apache.commons.lang3.StringUtils.left;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Configuration
 @SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
@@ -29,5 +30,16 @@ public class FreemarkerConfig extends FreeMarkerAutoConfiguration.FreeMarkerWebC
         configuration.setSharedVariable("version", configParameters.getBuildInfo().getVersion());
         configuration.setSharedVariable("commit", left(configParameters.getBuildInfo().getCommit(), 6));
         configuration.setSharedVariable("repositoryURL", configParameters.getBuildInfo().getRepositoryUrl());
+        configuration.setSharedVariable("authInfo", new AuthInfo());
+    }
+
+    public static class AuthInfo {
+        public boolean authorized() {
+            return SecurityContextHolder.getContext()
+                    .getAuthentication()
+                    .getAuthorities()
+                    .stream()
+                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+        }
     }
 }

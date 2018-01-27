@@ -21,7 +21,6 @@
         <table class="table table-striped table-condensed">
             <thead>
                 <tr>
-                    <th><@spring.message code="page.admin.posts.list.column.url"/></th>
                     <th><@spring.message code="page.admin.posts.list.column.title"/></th>
                     <th><@spring.message code="page.admin.posts.list.column.created-at"/></th>
                     <th><@spring.message code="page.admin.posts.list.column.published"/></th>
@@ -31,18 +30,19 @@
                 <#list posts as post>
                     <tr>
                         <td>
-                            <a href="/post/${post.url().encoded()}"
-                               title="<@spring.message code="page.admin.posts.list.title.url"/>">
-                                ${post.url()}
-                            </a>
-                        </td>
-                        <td>
-                            <a href="/post/${post.url().encoded()}"
-                               title="<@spring.message code="page.admin.posts.list.title.title"/>">
-                                ${post.title()}
-                            </a>
+                            <b>
+                                <a href="/post/${post.url().encoded()}"
+                                   title="<@spring.message code="page.admin.posts.list.title.title"/>">
+                                    ${post.title()}
+                                </a>
+                            </b>
                             <br/>
                             <small>
+                                <a href="/post/${post.url().encoded()}"
+                                   title="<@spring.message code="page.admin.posts.list.title.url"/>">
+                                    /post/<b>${post.url().decoded()}</b>
+                                </a>
+                                <br/>
                                 <a href="<@spring.url "/admin/posts/${post.url().encoded()}/edit" />">
                                     <@spring.message code="page.admin.posts.list.action.edit"/>
                                 </a> |
