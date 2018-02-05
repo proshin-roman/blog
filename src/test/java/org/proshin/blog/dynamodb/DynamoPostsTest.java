@@ -24,8 +24,9 @@ public class DynamoPostsTest extends AbstractIntegrationTest {
     @Test
     public void testSelectOne_findExistingPost() {
         PersistentPost post =
-                new DynamoPost(posts.getTable(), new Url("url"), "Published post", now(), now(), true, "Some content")
-                        .persist();
+                new DynamoPost(posts.getTable(), new Url("url"), "Published post", "Shortcut", now(), now(), true,
+                        "Some content")
+                                .persist();
         assertThat(posts.postByUrl(post.url()).orElseThrow(() -> new PostNotFoundException(new Url("url"))), is(post));
     }
 
@@ -38,11 +39,13 @@ public class DynamoPostsTest extends AbstractIntegrationTest {
     @Test
     public void testThatPublishedAreFilteredOut() {
         Url publishedUrl =
-                new DynamoPost(posts.getTable(), new Url("url-1"), "Published post", now(), now(), true, "Some content")
-                        .persist()
-                        .url();
+                new DynamoPost(posts.getTable(), new Url("url-1"), "Published post", "Shortcut", now(), now(), true,
+                        "Some content")
+                                .persist()
+                                .url();
         Url nonPublishedUrl =
-                new DynamoPost(posts.getTable(), new Url("url-2"), "NOT published post", now(), now(), false,
+                new DynamoPost(posts.getTable(), new Url("url-2"), "NOT published post", "Shortcut", now(), now(),
+                        false,
                         "Some content")
                                 .persist()
                                 .url();
@@ -77,8 +80,9 @@ public class DynamoPostsTest extends AbstractIntegrationTest {
     @Test(expected = PostNotFoundException.class)
     public void testDelete() {
         PersistentPost post =
-                new DynamoPost(posts.getTable(), new Url("url"), "Published post", now(), now(), true, "Some content")
-                        .persist();
+                new DynamoPost(posts.getTable(), new Url("url"), "Published post", "Shortcut", now(), now(), true,
+                        "Some content")
+                                .persist();
 
         post.delete();
 

@@ -43,7 +43,7 @@ public class GuestPagesControllerIntegrationTest extends AbstractIntegrationTest
     public void testThatNonPublishedPostIsNotAvailableForGuests() throws Exception {
         PersistentPost post =
                 new DynamoPost(dynamoDB.getTable(DynamoPosts.TABLE_NAME),
-                        new Url("url"), "Some test post", now(), now(), false, "Just a piece of content")
+                        new Url("url"), "Some test post", "Shortcut", now(), now(), false, "Just a piece of content")
                                 .persist();
         // when it's not published
         post.unpublish().persist();

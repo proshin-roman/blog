@@ -62,6 +62,7 @@ public class AdminPostsPagesController {
                         new ChangedPost(
                                 post.url().decoded(),
                                 post.title(),
+                                post.shortcut(),
                                 post.creationDate(),
                                 post.publicationDate(),
                                 post.published(),
@@ -102,7 +103,7 @@ public class AdminPostsPagesController {
         }
         Url newUrl = new Url(post.getUrl());
         DynamoPost dynamoPost =
-                new DynamoPost(posts.getTable(), newUrl, post.getTitle(), post.getCreationDate(),
+                new DynamoPost(posts.getTable(), newUrl, post.getTitle(), post.getShortcut(), post.getCreationDate(),
                         post.getPublicationDate(), post.isPublished(), post.getContent());
         if (!newUrl.equals(originalUrl)) {
             dynamoPost.persist();
@@ -124,6 +125,8 @@ public class AdminPostsPagesController {
         private String url;
         @NotBlank
         private String title;
+        @NotBlank
+        private String shortcut;
         private LocalDateTime creationDate;
         private LocalDateTime publicationDate;
         private boolean published;

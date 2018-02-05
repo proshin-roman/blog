@@ -25,7 +25,8 @@ public class GuestPagesControllerTest {
     public void testThatIndexPageShowsFirstArticles() throws Exception {
         List<PersistentPost> postsForIndexPage =
                 singletonList(
-                        new DynamoPost(postsTable, new Url("10"), "Test post #10", now(), now(), true, "content"));
+                        new DynamoPost(postsTable, new Url("10"), "Test post #10", "Shortcut", now(), now(), true,
+                                "content"));
 
         when(posts.page(0, 10, true))
                 .thenReturn(postsForIndexPage);
@@ -39,7 +40,7 @@ public class GuestPagesControllerTest {
     @Test
     public void testThatViewPostShowsTheRequestedPost() throws Exception {
         PersistentPost requestedPost =
-                new DynamoPost(postsTable, new Url("10"), "Test post #10", now(), now(), true,
+                new DynamoPost(postsTable, new Url("10"), "Test post #10", "Shortcut", now(), now(), true,
                         "*markdown* content");
         when(posts.postByUrl(new Url("10")))
                 .thenReturn(Optional.of(requestedPost));

@@ -12,6 +12,7 @@ import static java.util.Collections.singletonMap;
 import java.util.List;
 import java.util.Optional;
 import lombok.NonNull;
+import static org.apache.commons.lang3.StringUtils.left;
 import org.proshin.blog.Url;
 import org.proshin.blog.model.PersistentPost;
 import org.proshin.blog.model.PersistentPosts;
@@ -64,7 +65,7 @@ public class DynamoPosts implements PersistentPosts {
     @NonNull
     @Override
     public PersistentPost newPost(@NonNull Url url, @NonNull String title, @NonNull String content) {
-        return new DynamoPost(table, url, title, now(), now(), false, content)
+        return new DynamoPost(table, url, title, left(content, 512), now(), now(), false, content)
                 .persist();
     }
 
