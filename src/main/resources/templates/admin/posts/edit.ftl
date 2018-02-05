@@ -22,6 +22,11 @@
     </div>
 
     <div class="form-group">
+        <label for="shortcut"><@spring.message code="page.admin.posts.editor.label.shortcut"/></label>
+        <@spring.formInput "post.shortcut" "id=shortcut class=form-control"/>
+    </div>
+
+    <div class="form-group">
         <label for="creationDate"><@spring.message code="page.admin.posts.editor.label.creation-date"/></label>
         <@spring.formInput "post.creationDate" "id=creationDate class=form-control" "datetime-local"/>
     </div>
