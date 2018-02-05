@@ -8,6 +8,8 @@ public interface Post {
 
     String title();
 
+    String shortcut();
+
     LocalDateTime creationDate();
 
     LocalDateTime publicationDate();

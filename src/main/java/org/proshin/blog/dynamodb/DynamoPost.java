@@ -6,18 +6,19 @@ import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.proshin.blog.DateToString;
 import org.proshin.blog.StringToDate;
 import org.proshin.blog.Url;
 import org.proshin.blog.model.PersistentPost;
 
+@EqualsAndHashCode(exclude = "posts")
 public class DynamoPost implements PersistentPost {
     private final Table posts;
     private final Url url;
     private final String title;
+    private final String shortcut;
     private final LocalDateTime creationDate;
     private final LocalDateTime publicationDate;
     private final boolean published;
@@ -27,18 +28,20 @@ public class DynamoPost implements PersistentPost {
         this(posts,
                 new Url(item.getString("url")),
                 item.getString("title"),
+                item.getString("shortcut"),
                 new StringToDate(item.getString("creation_date")).toLocalDateTime(),
                 new StringToDate(item.getString("publication_date")).toLocalDateTime(),
                 item.getBOOL("published"),
                 item.getString("content"));
     }
 
-    public DynamoPost(@NonNull Table posts, @NonNull Url url, @NonNull String title,
+    public DynamoPost(@NonNull Table posts, @NonNull Url url, @NonNull String title, @NonNull String shortcut,
             @NonNull LocalDateTime creationDate, @NonNull LocalDateTime publicationDate, boolean published,
             @NonNull String content) {
         this.posts = posts;
         this.url = url;
         this.title = title;
+        this.shortcut = shortcut;
         this.creationDate = creationDate;
         this.publicationDate = publicationDate;
         this.published = published;
@@ -53,6 +56,11 @@ public class DynamoPost implements PersistentPost {
     @Override
     public String title() {
         return title;
+    }
+
+    @Override
+    public String shortcut() {
+        return shortcut;
     }
 
     @Override
@@ -78,13 +86,13 @@ public class DynamoPost implements PersistentPost {
     @NonNull
     @Override
     public PersistentPost publish() {
-        return new DynamoPost(posts, url, title, creationDate, now(), true, content);
+        return new DynamoPost(posts, url, title, shortcut, creationDate, now(), true, content);
     }
 
     @NonNull
     @Override
     public PersistentPost unpublish() {
-        return new DynamoPost(posts, url, title, creationDate, publicationDate, false, content);
+        return new DynamoPost(posts, url, title, shortcut, creationDate, publicationDate, false, content);
     }
 
     @NonNull
@@ -94,6 +102,7 @@ public class DynamoPost implements PersistentPost {
                 new Item()
                         .withPrimaryKey(new PrimaryKey("url", url.decoded()))
                         .with("title", title)
+                        .with("shortcut", shortcut)
                         .with("creation_date", new DateToString(creationDate).toString())
                         .with("publication_date", new DateToString(publicationDate).toString())
                         .with("published", published)
@@ -107,6 +116,7 @@ public class DynamoPost implements PersistentPost {
     public PersistentPost update() {
         posts.updateItem(new PrimaryKey("url", url.decoded()),
                 new AttributeUpdate("title").put(title),
+                new AttributeUpdate("shortcut").put(shortcut),
                 new AttributeUpdate("creation_date")
                         .put(new DateToString(creationDate).toString()),
                 new AttributeUpdate("publication_date")
@@ -119,37 +129,5 @@ public class DynamoPost implements PersistentPost {
     @Override
     public void delete() {
         posts.deleteItem(new PrimaryKey("url", url.decoded()));
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        DynamoPost that = (DynamoPost) o;
-
-        return new EqualsBuilder()
-                .append(published, that.published)
-                .append(url, that.url)
-                .append(title, that.title)
-                .append(creationDate, that.creationDate)
-                .append(publicationDate, that.publicationDate)
-                .append(content, that.content)
-                .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(url)
-                .append(title)
-                .append(creationDate)
-                .append(publicationDate)
-                .append(published)
-                .append(content)
-                .toHashCode();
     }
 }

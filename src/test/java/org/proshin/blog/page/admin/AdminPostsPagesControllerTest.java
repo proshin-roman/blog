@@ -133,6 +133,7 @@ public class AdminPostsPagesControllerTest extends AbstractIntegrationTest {
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("url", post.url().decoded())
                                 .param("title", "New title")
+                                .param("shortcut", "New shortcut")
                                 .param("content", "New content")
                                 .param("creationDate", "2018-01-09T13:23")
                                 .param("publicationDate", "2018-01-07T13:23")
@@ -142,6 +143,7 @@ public class AdminPostsPagesControllerTest extends AbstractIntegrationTest {
 
         posts.postByUrl(post.url()).ifPresent(changedPost -> {
             assertThat(changedPost.title(), is("New title"));
+            assertThat(changedPost.shortcut(), is("New shortcut"));
             assertThat(changedPost.content(), is("New content"));
             assertThat(changedPost.creationDate(),
                     is(new StringToDate("2018-01-09T13:23").toLocalDateTime()));
