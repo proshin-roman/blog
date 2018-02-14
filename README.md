@@ -8,3 +8,4 @@
 [![Dependency Status](https://www.versioneye.com/user/projects/5a708ea30fb24f459ca25146/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5a708ea30fb24f459ca25146)
 [![Job Status](https://inspecode.rocro.com/badges/github.com/proshin-roman/blog/status?token=BT_DbLkNAds8keIm8niXyOdlRG6sodmCwr9tZUUK_po)](https://inspecode.rocro.com/jobs/github.com/proshin-roman/blog/latest?completed=true)
 [![Report](https://inspecode.rocro.com/badges/github.com/proshin-roman/blog/report?token=BT_DbLkNAds8keIm8niXyOdlRG6sodmCwr9tZUUK_po&branch=master)](https://inspecode.rocro.com/reports/github.com/proshin-roman/blog/branch/master/summary)
+[![](http://codescene.io/projects/2345/status.svg) Get more details at **codescene.io**.](http://codescene.io/projects/2345/jobs/latest-successful/results)
