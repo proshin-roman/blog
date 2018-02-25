@@ -8,6 +8,7 @@ import static org.apache.commons.lang3.StringUtils.left;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Configuration
@@ -35,11 +36,12 @@ public class FreemarkerConfig extends FreeMarkerAutoConfiguration.FreeMarkerWebC
 
     public static class AuthInfo {
         public boolean authorized() {
-            return SecurityContextHolder.getContext()
-                    .getAuthentication()
-                    .getAuthorities()
-                    .stream()
-                    .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+            final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            return authentication != null
+                    && authentication
+                            .getAuthorities()
+                            .stream()
+                            .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
         }
     }
 }
