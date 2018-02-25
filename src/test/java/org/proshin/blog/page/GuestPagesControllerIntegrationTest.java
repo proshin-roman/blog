@@ -56,7 +56,8 @@ public class GuestPagesControllerIntegrationTest extends AbstractIntegrationTest
         post.publish().persist();
 
         getMvc()
-                .perform(get("/post/" + post.url()))
+                .perform(
+                        get("/post/" + post.url()))
                 .andExpect(status().isOk());
     }
 }

@@ -6,6 +6,7 @@ import org.proshin.blog.exception.PostNotFoundException;
 import org.proshin.blog.model.PersistentPosts;
 import org.proshin.blog.model.Post;
 import org.proshin.blog.textprocessing.MarkdownText;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,12 +29,12 @@ public class GuestPagesController {
     }
 
     @GetMapping("/post/{url}")
-    public ModelAndView getPost(@PathVariable Url url) {
+    public ModelAndView getPost(@PathVariable Url url, Authentication authentication) {
         Post post =
                 posts
                         .postByUrl(url)
                         .orElseThrow(() -> new PostNotFoundException(url));
-        if (!post.published()) {
+        if (!post.published() && (authentication == null || !authentication.isAuthenticated())) {
             throw new PostNotFoundException(url);
         }
         return new SmartModelAndView("post")

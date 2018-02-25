@@ -14,6 +14,7 @@ import org.proshin.blog.Url;
 import org.proshin.blog.dynamodb.DynamoPost;
 import org.proshin.blog.dynamodb.DynamoPosts;
 import org.proshin.blog.model.PersistentPost;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.web.servlet.ModelAndView;
 
 public class GuestPagesControllerTest {
@@ -46,7 +47,10 @@ public class GuestPagesControllerTest {
                 .thenReturn(Optional.of(requestedPost));
 
         GuestPagesController guestPagesController = new GuestPagesController(posts);
-        ModelAndView modelAndView = guestPagesController.getPost(new Url("10"));
+        ModelAndView modelAndView =
+                guestPagesController.getPost(
+                        new Url("10"),
+                        new TestingAuthenticationToken("user", "user"));
         assertThat(modelAndView.getViewName(), is("post"));
         assertThat(modelAndView.getModel().get("post"), is(requestedPost));
         assertThat(modelAndView.getModel().get("content"), is("<p><em>markdown</em> content</p>\n"));
