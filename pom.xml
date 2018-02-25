@@ -157,7 +157,7 @@
     <!-- Error tracking -->
     <dependency>
       <groupId>io.sentry</groupId>
-      <artifactId>sentry-spring</artifactId>
+      <artifactId>sentry-logback</artifactId>
       <version>1.7.0</version>
     </dependency>
 

@@ -5,14 +5,10 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
-import io.sentry.spring.SentryExceptionResolver;
-import io.sentry.spring.SentryServletContextInitializer;
 import lombok.extern.log4j.Log4j;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Log4j
 @Configuration
@@ -56,15 +52,5 @@ public class ApplicationContext {
         }
 
         return new DynamoDB(clientBuilder.build());
-    }
-
-    @Bean
-    public HandlerExceptionResolver sentryExceptionResolver() {
-        return new SentryExceptionResolver();
-    }
-
-    @Bean
-    public ServletContextInitializer sentryServletContextInitializer() {
-        return new SentryServletContextInitializer();
     }
 }
