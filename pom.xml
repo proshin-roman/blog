@@ -137,7 +137,7 @@
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-dynamodb</artifactId>
-      <version>1.11.285</version>
+      <version>1.11.287</version>
     </dependency>
 
     <!-- JSON library -->
