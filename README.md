@@ -12,3 +12,4 @@
 [![Coding Hours](https://api.gitential.com/accounts/612/projects/643/badges/coding-hours.svg)](https://gitential.com/accounts/612/projects/643/share?uuid=4590ddc3-295f-40e8-b3fc-19018fea25e2&utm_source=shield&utm_medium=shield&utm_campaign=643)
 [![Efficiency](https://api.gitential.com/accounts/612/projects/643/badges/efficiency.svg)](https://gitential.com/accounts/612/projects/643/share?uuid=4590ddc3-295f-40e8-b3fc-19018fea25e2&utm_source=shield&utm_medium=shield&utm_campaign=643)
 [![](http://codescene.io/projects/2345/status.svg) Get more details at **codescene.io**.](http://codescene.io/projects/2345/jobs/latest-successful/results)
+[![CircleCI](https://circleci.com/gh/proshin-roman/blog.svg?style=svg)](https://circleci.com/gh/proshin-roman/blog)
