@@ -1,0 +1,21 @@
+blog:
+  admin:
+    username: dummy
+    password: dummy
+  build-info:
+    commit: commit here
+    version: project.version here
+    repository-url: project.url here
+  reCaptcha:
+    key: dummy
+    secret: dummy
+liquibase:
+  change-log: classpath:/db-migrations/changelog.xml
+logging.level.org.springframework.test.context.cache: debug
+spring:
+  datasource:
+    schema:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa

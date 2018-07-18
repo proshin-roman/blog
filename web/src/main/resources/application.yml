@@ -1,0 +1,20 @@
+blog:
+  build-info:
+    commit: @buildNumber@
+    version: @project.version@
+    repository-url: @project.url@
+  # admin:
+    # username: you must specify it via System or Environment variables (required param)
+    # password: you must specify it via System or Environment variables (required param)
+  # reCaptcha:
+    # key: you must specify it via System or Environment variables (required param)
+    # secret: you must specify it via System or Environment variables (required param)
+liquibase:
+  change-log: classpath:/db-migrations/changelog.xml
+spring:
+  messages:
+    fallback-to-system-locale: false
+  # datasource:
+    # url: jdbc:mysql://localhost:3306/blogdb?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+    # username: user
+    # password: password

@@ -5,9 +5,14 @@
 
   <groupId>org.proshin</groupId>
   <artifactId>blog</artifactId>
-  <version>0.0.3</version>
-  <packaging>jar</packaging>
-
+  <version>0.0.4</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>base</module>
+    <module>storage</module>
+    <module>mysql-storage</module>
+    <module>web</module>
+  </modules>
   <name>blog</name>
   <description>Personal blog with social networks integration</description>
   <url>https://github.com/proshin-roman/blog</url>
@@ -56,7 +61,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
-    <start-class>org.proshin.blog.BlogApplication</start-class>
   </properties>
 
   <repositories>
@@ -65,54 +69,14 @@
       <name>jCenter</name>
       <url>https://jcenter.bintray.com</url>
     </repository>
-    <repository>
-      <id>dynamodb-local</id>
-      <name>AWS DynamoDB Local Release Repository</name>
-      <url>https://s3-us-west-2.amazonaws.com/dynamodb-local/release</url>
-    </repository>
   </repositories>
 
   <dependencies>
-    <!-- Spring Boot stuff -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-aop</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-freemarker</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-configuration-processor</artifactId>
-      <optional>true</optional>
-    </dependency>
-
-    <!-- Markdown to HTML -->
-    <dependency>
-      <groupId>com.atlassian.commonmark</groupId>
-      <artifactId>commonmark</artifactId>
-      <version>0.11.0</version>
-    </dependency>
-
     <!-- Make life easier -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-logging</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
@@ -132,170 +96,32 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.7</version>
     </dependency>
-
-    <!-- Data storage -->
     <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-dynamodb</artifactId>
-      <version>1.11.365</version>
+      <groupId>org.cactoos</groupId>
+      <artifactId>cactoos</artifactId>
+      <version>0.36</version>
     </dependency>
-
-    <!-- JSON library -->
+    <!-- Test dependencies -->
     <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.5</version>
-    </dependency>
-
-    <!-- Make Freemarker support Java 8 DateTime structures -->
-    <dependency>
-      <groupId>no.api.freemarker</groupId>
-      <artifactId>freemarker-java8</artifactId>
-      <version>1.2.0</version>
-    </dependency>
-
-    <!-- Error tracking -->
-    <dependency>
-      <groupId>io.sentry</groupId>
-      <artifactId>sentry-logback</artifactId>
-      <version>1.7.5</version>
-    </dependency>
-
-    <!--
-      **********************
-      Dependencies for tests
-      **********************
-    -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <!-- Spring security test suite -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <version>5.0.6.RELEASE</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- Dynamo local -->
-    <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>DynamoDBLocal</artifactId>
-      <version>1.11.119</version>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.almworks.sqlite4java</groupId>
-      <artifactId>sqlite4java</artifactId>
-      <version>1.0.392</version>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.almworks.sqlite4java</groupId>
-      <artifactId>sqlite4java-win32-x86</artifactId>
-      <version>1.0.392</version>
-      <type>dll</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.almworks.sqlite4java</groupId>
-      <artifactId>sqlite4java-win32-x64</artifactId>
-      <version>1.0.392</version>
-      <type>dll</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.almworks.sqlite4java</groupId>
-      <artifactId>libsqlite4java-osx</artifactId>
-      <version>1.0.392</version>
-      <type>dylib</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.almworks.sqlite4java</groupId>
-      <artifactId>libsqlite4java-linux-i386</artifactId>
-      <version>1.0.392</version>
-      <type>so</type>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.almworks.sqlite4java</groupId>
-      <artifactId>libsqlite4java-linux-amd64</artifactId>
-      <version>1.0.392</version>
-      <type>so</type>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.197</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <build>
-    <finalName>blog</finalName>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>cobertura-maven-plugin</artifactId>
-        <version>2.7</version>
-        <configuration>
-          <formats>
-            <format>html</format>
-            <format>xml</format>
-          </formats>
-          <check/>
-        </configuration>
-      </plugin>
-      <!-- This plugin is required to run DynamoDB locally for tests -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>3.1.1</version>
-        <executions>
-          <execution>
-            <id>copy</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <includeScope>test</includeScope>
-              <includeTypes>so,dll,dylib</includeTypes>
-              <outputDirectory>${project.basedir}/native-libs</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- Operate with Git revision -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>buildnumber-maven-plugin</artifactId>
-        <version>1.4</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>create</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <doCheck>false</doCheck>
-          <doUpdate>false</doUpdate>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

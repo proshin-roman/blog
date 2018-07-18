@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+  <changeSet id="165-create-table-post" author="proshin">
+    <createTable tableName="post">
+      <column name="id" type="bigint unsigned" autoIncrement="true">
+        <constraints primaryKey="true" primaryKeyName="pk_post" nullable="false"/>
+      </column>
+      <column name="url" type="varchar(1000)">
+        <constraints unique="true" uniqueConstraintName="unique_blog_url" nullable="false"/>
+      </column>
+      <column name="title" type="varchar(2000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="shortcut" type="text"/>
+      <column name="creation_dt" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="publication_dt" type="datetime"/>
+      <column name="published" type="boolean" defaultValueBoolean="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="content" type="text"/>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>
