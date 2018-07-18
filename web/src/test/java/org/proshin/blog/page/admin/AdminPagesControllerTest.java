@@ -9,6 +9,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * @todo #165 Fix these tests so that they use MySQL implementation of Post/Posts interfaces.
+ */
 @Ignore
 @WithMockUser(roles = "ADMIN")
 public class AdminPagesControllerTest extends AbstractIntegrationTest {
