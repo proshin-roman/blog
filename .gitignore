@@ -2,7 +2,7 @@ classes/
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
-### TEST ###
+### TEST 1 ###
 ### STS ###
 .apt_generated
 .classpath
