@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * @todo #165 Fix AdminPostsPagesControllerTest so that it uses MySQL implementation of Post/Posts interfaces.
+ * @todo #165:30min Fix AdminPostsPagesControllerTest so that it uses MySQL implementation of Post/Posts interfaces.
  */
 @Ignore
 @WithMockUser(roles = "ADMIN")
