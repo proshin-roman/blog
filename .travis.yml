@@ -15,16 +15,3 @@ script:
   - mvn cobertura:cobertura
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-
-deploy:
-  provider: elasticbeanstalk
-  access_key_id: $AWS_ACCESS_KEY_ID
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  region: $AWS_REGION
-  app: $AWS_APP
-  env: $AWS_ENV
-  bucket_name: $AWS_BUCKET_NAME
-  skip_cleanup: true
-  on:
-    branch: master
-  zip_file: target/blog.jar
