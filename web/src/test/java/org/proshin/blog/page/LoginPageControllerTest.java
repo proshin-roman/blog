@@ -24,6 +24,6 @@ public class LoginPageControllerTest extends AbstractIntegrationTest {
             .andExpect(content().string(containsString("class=\"g-recaptcha input-group\"")))
             .andExpect(
                 content().string(containsString(
-                    format("data-sitekey=\"%s\">", configParameters.getReCaptcha().getKey()))));
+                    format("data-sitekey=\"%s\">", configParameters.getRecaptcha().getKey()))));
     }
 }

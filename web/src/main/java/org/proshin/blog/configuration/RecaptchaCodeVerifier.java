@@ -12,7 +12,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
-public class ReCaptchaCodeVerifier {
+public class RecaptchaCodeVerifier {
 
     private static final String RECAPTCHA_VALIDATION_URL_TEMPLATE =
         "https://www.google.com/recaptcha/api/siteverify";
@@ -20,7 +20,7 @@ public class ReCaptchaCodeVerifier {
     private final RestTemplate restTemplate;
     private final String secret;
 
-    public ReCaptchaCodeVerifier(RestTemplate restTemplate, String secret) {
+    public RecaptchaCodeVerifier(RestTemplate restTemplate, String secret) {
         this.restTemplate = restTemplate;
         this.secret = secret;
     }
@@ -36,7 +36,7 @@ public class ReCaptchaCodeVerifier {
         parameters.add("secret", secret);
         parameters.add("response", response);
 
-        Map reCaptchaResponse =
+        Map recaptchaResponse =
             restTemplate
                 .exchange(
                     RECAPTCHA_VALIDATION_URL_TEMPLATE,
@@ -46,13 +46,13 @@ public class ReCaptchaCodeVerifier {
                 )
                 .getBody();
 
-        if (reCaptchaResponse.containsKey("success") && reCaptchaResponse.get("success").equals(true)) {
+        if (recaptchaResponse.containsKey("success") && recaptchaResponse.get("success").equals(true)) {
             return true;
         }
 
-        if (reCaptchaResponse.containsKey("error-codes")) {
-            log.warn("Failed attempt to verify reCaptcha response. Error codes are: {}",
-                reCaptchaResponse.get("error-codes")
+        if (recaptchaResponse.containsKey("error-codes")) {
+            log.warn("Failed attempt to verify recaptcha response. Error codes are: {}",
+                recaptchaResponse.get("error-codes")
             );
         }
         return false;

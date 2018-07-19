@@ -17,6 +17,6 @@ public class LoginPageController {
     @GetMapping("/login")
     public ModelAndView get() {
         return new SmartModelAndView("login")
-            .with("reCaptchaKey", configParameters.getReCaptcha().getKey());
+            .with("recaptchaKey", configParameters.getRecaptcha().getKey());
     }
 }

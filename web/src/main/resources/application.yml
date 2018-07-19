@@ -6,7 +6,7 @@ blog:
   # admin:
     # username: you must specify it via System or Environment variables (required param)
     # password: you must specify it via System or Environment variables (required param)
-  # reCaptcha:
+  # recaptcha:
     # key: you must specify it via System or Environment variables (required param)
     # secret: you must specify it via System or Environment variables (required param)
 liquibase:

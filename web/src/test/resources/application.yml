@@ -6,7 +6,7 @@ blog:
     commit: commit here
     version: project.version here
     repository-url: project.url here
-  reCaptcha:
+  recaptcha:
     key: dummy
     secret: dummy
 liquibase:

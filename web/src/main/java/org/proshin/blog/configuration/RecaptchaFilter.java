@@ -13,16 +13,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.web.client.RestTemplate;
 
-@Slf4j class ReCaptchaFilter implements Filter {
+@Slf4j
+public class RecaptchaFilter implements Filter {
 
     private final SimpleUrlAuthenticationFailureHandler failureHandler;
-    private final ReCaptchaCodeVerifier codeVerifier;
+    private final RecaptchaCodeVerifier codeVerifier;
 
-    ReCaptchaFilter(SimpleUrlAuthenticationFailureHandler failureHandler,
-        String reCaptchaSecret, RestTemplate restTemplate
+    RecaptchaFilter(SimpleUrlAuthenticationFailureHandler failureHandler,
+        String recaptchaSecret, RestTemplate restTemplate
     ) {
         this.failureHandler = failureHandler;
-        this.codeVerifier = new ReCaptchaCodeVerifier(restTemplate, reCaptchaSecret);
+        this.codeVerifier = new RecaptchaCodeVerifier(restTemplate, recaptchaSecret);
     }
 
     @Override
@@ -34,14 +35,14 @@ import org.springframework.web.client.RestTemplate;
         throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        String reCaptchaResponse = httpServletRequest.getParameter("g-recaptcha-response");
+        String recaptchaResponse = httpServletRequest.getParameter("g-recaptcha-response");
 
-        if (reCaptchaResponse != null && !codeVerifier.isResponseValid(reCaptchaResponse)) {
-            log.warn("There was an attempt to log in using incorrect reCaptcha code '{}' from IP='{}'",
-                reCaptchaResponse, httpServletRequest.getRemoteAddr()
+        if (recaptchaResponse != null && !codeVerifier.isResponseValid(recaptchaResponse)) {
+            log.warn("There was an attempt to log in using incorrect recaptcha code '{}' from IP='{}'",
+                recaptchaResponse, httpServletRequest.getRemoteAddr()
             );
             failureHandler.onAuthenticationFailure(httpServletRequest, httpServletResponse,
-                new BadReCaptchaCodeException("Invalide reCaptcha response: " + reCaptchaResponse)
+                new BadRecaptchaCodeException("Invalide recaptcha response: " + recaptchaResponse)
             );
             return;
         }

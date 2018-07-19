@@ -146,4 +146,34 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>heroku</id>
+      <build>
+        <plugins>
+          <!-- Deploy the app to Heroku -->
+          <plugin>
+            <groupId>com.heroku.sdk</groupId>
+            <artifactId>heroku-maven-plugin</artifactId>
+            <version>2.0.5</version>
+            <executions>
+              <execution>
+                <phase>install</phase>
+                <goals>
+                  <goal>deploy</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <appName>proshin-org</appName>
+              <jdkVersion>1.8</jdkVersion>
+              <processTypes>
+                <web>java $JAVA_OPTS -jar -Dserver.port=$PORT target/blog.jar $JAR_OPTS</web>
+              </processTypes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

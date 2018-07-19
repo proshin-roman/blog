@@ -8,7 +8,7 @@
       <column name="id" type="bigint unsigned" autoIncrement="true">
         <constraints primaryKey="true" primaryKeyName="pk_post" nullable="false"/>
       </column>
-      <column name="url" type="varchar(1000)">
+      <column name="url" type="varchar(255)">
         <constraints unique="true" uniqueConstraintName="unique_blog_url" nullable="false"/>
       </column>
       <column name="title" type="varchar(2000)">

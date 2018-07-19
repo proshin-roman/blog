@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="g-recaptcha input-group" data-sitekey="${reCaptchaKey}"></div>
+            <div class="g-recaptcha input-group" data-sitekey="${recaptchaKey}"></div>
 
             <div style="margin-top:10px" class="form-group">
                 <div class="col-sm-12 controls">
