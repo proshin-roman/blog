@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
             .and()
             .addFilterBefore(
-                    new ReCaptchaFilter(failureHandler, configParameters.getReCaptcha().getSecret(), restTemplate),
+                    new RecaptchaFilter(failureHandler, configParameters.getRecaptcha().getSecret(), restTemplate),
                     UsernamePasswordAuthenticationFilter.class);
         // @formatter:on
     }

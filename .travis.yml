@@ -22,3 +22,4 @@ deploy:
   app: proshin-org
   on:
     repo: proshin-roman/blog
+  skip_cleanup: true

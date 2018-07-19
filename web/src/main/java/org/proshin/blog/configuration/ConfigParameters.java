@@ -17,7 +17,7 @@ public class ConfigParameters {
     @Valid
     private BuildInfo buildInfo;
     @Valid
-    private ReCaptcha reCaptcha;
+    private Recaptcha recaptcha;
 
     @Data
     public static class Admin {
@@ -38,7 +38,7 @@ public class ConfigParameters {
     }
 
     @Data
-    public static class ReCaptcha {
+    public static class Recaptcha {
         @NotNull
         private String key;
         @NotNull
