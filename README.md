@@ -7,7 +7,7 @@
 
 ## Test coverage
 [![Test Coverage](https://codecov.io/gh/proshin-roman/blog/branch/master/graph/badge.svg)](https://codecov.io/gh/proshin-roman/blog)
-[![SonarQube](https://img.shields.io/badge/sonar-ok-green.svg)](https://sonarcloud.io/dashboard?id=org.proshin%3Ablog)
+[![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=org.proshin%3Ablog&metric=alert_status)](https://sonarcloud.io/dashboard?id=org.proshin%3Ablog)
 
 ## Code quality
 [![Maintainability](https://api.codeclimate.com/v1/badges/2f72a719653fc04318c8/maintainability)](https://codeclimate.com/github/proshin-roman/blog/maintainability)
