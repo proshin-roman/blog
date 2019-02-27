@@ -91,7 +91,7 @@
     <dependency>
       <groupId>org.cactoos</groupId>
       <artifactId>cactoos</artifactId>
-      <version>0.38</version>
+      <version>0.40</version>
     </dependency>
     <!-- Test dependencies -->
     <dependency>
